@@ -1,0 +1,29 @@
+{
+  "name": "@cesarbr/knot-cloud-storage",
+  "version": "0.1.0",
+  "description": "KNoT Cloud storage service",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CESARBR/knot-cloud-storage.git"
+  },
+  "main": "./build/index.js",
+  "author": "KNoT",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint .",
+    "build": "babel src --out-dir build",
+    "start": "node build",
+    "start:watch": "nodemon --exec babel-node src",
+    "start:debug": "babel-node debug src"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-module-resolver": "^3.2.0",
+    "babel-plugin-transform-builtin-extend": "^1.1.2",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "nodemon": "^1.18.10"
+  }
+}
