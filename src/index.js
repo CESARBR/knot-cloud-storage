@@ -7,7 +7,7 @@ async function main() {
   const settings = new SettingsFactory().create();
   const database = new MongoDatabaseFactory(settings).create();
 
-  const server = new HapiFactory(settings).create();
+  const server = new HapiFactory(settings, database).create();
 
   await database.start();
   await server.start();
