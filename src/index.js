@@ -6,7 +6,7 @@ import HapiFactory from 'server/HapiFactory';
 async function main() {
   const settings = new SettingsFactory().create();
   const database = new DatabaseFactory(settings.databaseType, settings.database).create();
-  const server = new HapiFactory(settings).create();
+  const server = new HapiFactory(settings, database).create();
 
   await database.start();
   await server.start();
