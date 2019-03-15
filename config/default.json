@@ -1,5 +1,8 @@
 {
   "database": {
     "name": "knot_storage"
+  },
+  "server": {
+    "port": 80
   }
 }
