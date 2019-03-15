@@ -1,12 +1,20 @@
 import Hapi from 'server/Hapi';
+import SaveDataInteractor from 'interactors/SaveData';
+import DataController from 'controllers/DataController';
+import DataStore from 'data/DataStore';
 
 class HapiFactory {
-  constructor(settings) {
+  constructor(settings, database) {
     this.settings = settings;
+    this.database = database;
   }
 
   create() {
-    return new Hapi(this.settings);
+    const dataStore = new DataStore(this.database);
+    const saveDataInteractor = new SaveDataInteractor(dataStore);
+    const dataController = new DataController(saveDataInteractor);
+
+    return new Hapi(this.settings, dataController);
   }
 }
 
