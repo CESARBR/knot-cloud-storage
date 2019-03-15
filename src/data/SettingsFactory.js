@@ -10,16 +10,27 @@ const databaseSchema = Joi.object().keys({
   name: Joi.string(),
 });
 
+const serverSchema = Joi.object().keys({
+  port: Joi.number().port().required(),
+});
+
 class SettingsFactory {
   create() {
     const database = this.loadDatabaseSettings();
-    return new Settings(database);
+    const server = this.loadServerSettings();
+    return new Settings(database, server);
   }
 
   loadDatabaseSettings() {
     const database = config.get('database');
     this.validate('database', database, databaseSchema);
     return database;
+  }
+
+  loadServerSettings() {
+    const server = config.get('server');
+    this.validate('server', server, serverSchema);
+    return server;
   }
 
   validate(propertyName, propertyValue, schema) {
