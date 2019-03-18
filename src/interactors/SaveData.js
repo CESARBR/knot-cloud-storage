@@ -7,8 +7,9 @@ function throwError(message, code) {
 }
 
 class SaveData {
-  constructor(dataStore) {
+  constructor(dataStore, uuidAliasResolver) {
     this.dataStore = dataStore;
+    this.uuidAliasResolver = uuidAliasResolver;
   }
 
   async execute(message) {
@@ -22,9 +23,24 @@ class SaveData {
       .head()
       .value();
 
+    const id = await this.reverseUuidLookup(routeData.from);
+
     await this.dataStore.save({
-      from: routeData.from,
+      from: id,
       payload: message.data.payload,
+    });
+  }
+
+  async reverseUuidLookup(uuid) {
+    return new Promise((resolve, reject) => {
+      this.uuidAliasResolver.reverseLookup(uuid, (error, aliases) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+
+        resolve(aliases[0]);
+      });
     });
   }
 }

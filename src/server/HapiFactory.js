@@ -3,6 +3,7 @@ import SaveDataInteractor from 'interactors/SaveData';
 import ListDataInteractor from 'interactors/ListData';
 import DataController from 'controllers/DataController';
 import DataStore from 'data/DataStore';
+import UuidAliasResolverFactory from 'network/UuidAliasResolverFactory';
 
 class HapiFactory {
   constructor(settings, database) {
@@ -12,7 +13,8 @@ class HapiFactory {
 
   create() {
     const dataStore = new DataStore(this.database);
-    const saveDataInteractor = new SaveDataInteractor(dataStore);
+    const uuidAliasResolver = new UuidAliasResolverFactory(this.settings).create();
+    const saveDataInteractor = new SaveDataInteractor(dataStore, uuidAliasResolver);
     const listDataInteractor = new ListDataInteractor(dataStore);
     const dataController = new DataController(saveDataInteractor, listDataInteractor);
 
