@@ -54,3 +54,81 @@ data | Y | The message data sent by the device. This data includes topic, payloa
 
 ### Response
     200 OK
+
+---
+
+    GET /data
+
+Get all the device messages received from the webhook service.
+
+## Parameters
+### URI Parameters
+Field | Required | Description
+--- | --- | ---
+orderBy | N | The field used to order.
+order | N | Ascending (1) or descending (-1) order, default=1.
+limit | N | The maximum number of data that you want, default=10.
+start | N | The start date that you want your set of data (format=YYYY-MM-DD HH:MM:SS).
+finish | N | The finish date that you want your set of data (format=YYYY-MM-DD HH:MM:SS).
+
+## Example
+### Request
+
+    GET https://storage.cloud.knot/data?limit=15 orderBy=timestamp&order=1
+
+### Response
+```json
+[
+    {
+        "from": "188824f0-28c4-475b-ab36-2505402bebcb",
+        "payload": {
+            "sensorId": 2,
+            "value": 234
+        },
+        "timestamp": "2019-03-18T12:48:05.569Z"
+    },
+    {
+        "from": "188824f0-28c4-475b-ab36-2505402bebcb",
+        "payload": {
+            "sensorId": 1,
+            "value": true
+        },
+        "timestamp": "2019-03-18T14:42:03.192Z"
+    }
+]
+```
+
+---
+
+    GET /data/{device_id}
+
+Get the messages received from the webhook service by a specific device.
+
+## Parameters
+### URI Parameters
+Field | Required | Description
+--- | --- | ---
+orderBy | N | The field used to order.
+order | N | Ascending (1) or descending (-1) order, default=1.
+limit | N | The maximum number of data that you want, default=10.
+start | N | The start date that you want your set of data (format=YYYY-MM-DD HH:MM:SS).
+finish | N | The finish date that you want your set of data (format=YYYY-MM-DD HH:MM:SS).
+
+## Example
+### Request
+
+    GET https://storage.cloud.knot/data/188824f0-28c4-475b-ab36-2505402bebcb?start=2019-03-18 13:00:00
+
+### Response
+```json
+[
+    {
+        "from": "188824f0-28c4-475b-ab36-2505402bebcb",
+        "payload": {
+            "sensorId": 1,
+            "value": true
+        },
+        "timestamp": "2019-03-18T14:42:03.192Z"
+    }
+]
+```

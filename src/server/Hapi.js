@@ -23,6 +23,16 @@ class HapiServer {
         handler: this.healthCheckHandler.bind(this),
       },
       {
+        method: 'GET',
+        path: '/data',
+        handler: this.dataController.list.bind(this.dataController),
+      },
+      {
+        method: 'GET',
+        path: '/data/{id}',
+        handler: this.dataController.listByDevice.bind(this.dataController),
+      },
+      {
         method: 'POST',
         path: '/data',
         handler: this.dataController.save.bind(this.dataController),
