@@ -9,6 +9,9 @@ class HapiServer {
   async start() {
     const server = hapi.server({
       port: this.settings.server.port,
+      router: {
+        stripTrailingSlash: true,
+      },
     });
 
     await server.route(this.createServerRoutes());
@@ -21,6 +24,21 @@ class HapiServer {
         method: 'GET',
         path: '/healthcheck',
         handler: this.healthCheckHandler.bind(this),
+      },
+      {
+        method: 'GET',
+        path: '/data',
+        handler: this.dataController.list.bind(this.dataController),
+      },
+      {
+        method: 'GET',
+        path: '/data/{id}',
+        handler: this.dataController.listByDevice.bind(this.dataController),
+      },
+      {
+        method: 'GET',
+        path: '/data/{deviceId}/sensor/{sensorId}',
+        handler: this.dataController.listBySensor.bind(this.dataController),
       },
       {
         method: 'POST',
