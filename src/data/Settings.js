@@ -1,7 +1,8 @@
 class Settings {
-  constructor(database, server) {
+  constructor(database, server, meshblu) {
     this.database = database;
     this.server = server;
+    this.meshblu = meshblu;
   }
 }
 

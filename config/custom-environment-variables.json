@@ -6,5 +6,9 @@
   },
   "server": {
     "port": "PORT"
+  },
+  "meshblu": {
+    "aliasLookupServerUri": "MESHBLU_ALIAS_LOOKUP_SERVER_URI",
+    "cacheRedisUri": "MESHBLU_CACHE_REDIS_URI"
   }
 }
