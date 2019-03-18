@@ -17,13 +17,20 @@ const serverSchema = Joi.object().keys({
   port: Joi.number().port().required(),
 });
 
+const meshbluSchema = Joi.object().keys({
+  aliasLookupServerUri: Joi.string().required(),
+  cacheRedisUri: Joi.string().required(),
+});
+
 class SettingsFactory {
   create() {
     const database = this.loadDatabaseSettings();
     const databaseConfig = this.loadDatabaseConfigSettings();
     const server = this.loadServerSettings();
-    return new Settings(database, databaseConfig, server);
+    const meshblu = this.loadMeshbluSettings();
+    return new Settings(database, databaseConfig, server, meshblu);
   }
+
 
   loadDatabaseSettings() {
     const database = config.get('database');
@@ -41,6 +48,12 @@ class SettingsFactory {
     const server = config.get('server');
     this.validate('server', server, serverSchema);
     return server;
+  }
+
+  loadMeshbluSettings() {
+    const meshblu = config.get('meshblu');
+    this.validate('meshblu', meshblu, meshbluSchema);
+    return meshblu;
   }
 
   validate(propertyName, propertyValue, schema) {
