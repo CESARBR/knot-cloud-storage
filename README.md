@@ -67,6 +67,14 @@ data | Y | The message data sent by the device. This data includes topic, payloa
 Get all the device messages.
 
 ## Parameters
+### Header Parameters
+In order to get the device messages, you need to be authenticated as its owner (gateway or user).
+
+Field | Required | Description
+--- | --- | ---
+auth_id | Y | Device ID.
+auth_token | Y | Device token.
+
 ### URI Parameters
 Field | Required | Description
 --- | --- | ---
@@ -111,6 +119,14 @@ finishDate | N | The finish date that you want your set of data (format=YYYY-MM-
 Get the messages received from the webhook service by a specific device.
 
 ## Parameters
+### Header Parameters
+In order to get the device messages, you need to be authenticated as its owner (gateway or user).
+
+Field | Required | Description
+--- | --- | ---
+auth_id | Y | Device ID.
+auth_token | Y | Device token.
+
 ### URI Parameters
 Field | Required | Description
 --- | --- | ---
@@ -147,6 +163,14 @@ finishDate | N | The finish date that you want your set of data (format=YYYY-MM-
 Get the messages received from the webhook service by a specific device sensor.
 
 ## Parameters
+### Header Parameters
+In order to get the device messages, you need to be authenticated as its owner (gateway or user).
+
+Field | Required | Description
+--- | --- | ---
+auth_id | Y | Device ID.
+auth_token | Y | Device token.
+
 ### URI Parameters
 Field | Required | Description
 --- | --- | ---
