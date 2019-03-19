@@ -18,8 +18,15 @@ const serverSchema = Joi.object().keys({
 });
 
 const meshbluSchema = Joi.object().keys({
-  aliasLookupServerUri: Joi.string().required(),
-  cacheRedisUri: Joi.string().required(),
+  namespace: Joi.string().required(),
+  messagesNamespace: Joi.string().required(),
+  redisUri: Joi.string().uri({ scheme: 'redis' }).required(),
+  cacheRedisUri: Joi.string().uri({ scheme: 'redis' }).required(),
+  aliasLookupServerUri: Joi.string().uri().required(),
+  jobTimeoutSeconds: Joi.number().positive().required(),
+  jobLogSampleRate: Joi.number().integer().min(0).required(),
+  requestQueueName: Joi.string().required(),
+  responseQueueName: Joi.string().required(),
 });
 
 class SettingsFactory {
