@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "b3f21b06_55a986b2",
+        "filename": "src/data/SettingsFactory.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1013096
+      },
+      "writtenOn": "2019-03-19T18:18:30Z",
+      "side": 1,
+      "message": "missing .required()",
+      "range": {
+        "startLine": 8,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 21
+      },
+      "revId": "55979865c4149d39a989e918a8eb8688b5969308",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "600d4ae5_a7f2260b",
         "filename": "src/index.js",
         "patchSetId": 1
