@@ -22,6 +22,30 @@
       "revId": "4fe432c335e72dfdf2a831314b312b829963357a",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2529b940_7c402ef6",
+        "filename": ".eslintrc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1013169
+      },
+      "writtenOn": "2019-03-19T22:43:39Z",
+      "side": 1,
+      "message": "Not here. I\u0027m getting these errors without the explicit configuration:\n\n/home/joaoneto/Workspace/KNoT/knot-cloud-storage/src/data/MongoDatabaseFactory.js\n  1:1   error  Resolve error: unable to load resolver \"babel-module\"  import/no-unresolved\n  1:1   error  Resolve error: unable to load resolver \"babel-module\"  import/no-extraneous-dependencies\n  1:1   error  Resolve error: unable to load resolver \"babel-module\"  import/no-duplicates\n.\n.\n.\n.",
+      "parentUuid": "43ae7855_d007732a",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 8
+      },
+      "revId": "4fe432c335e72dfdf2a831314b312b829963357a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
     }
   ]
 }
