@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29107c15_f915a217",
+        "filename": "src/data/MongoDatabaseFactory.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1013096
+      },
+      "writtenOn": "2019-03-19T13:32:57Z",
+      "side": 1,
+      "message": "Here you can have the field protocol to build the database uri like:\nmongodb://localhost:27017\n\nSo this protocol can say which database we are using maybe...\nlike: mysqldb://....\nwhat do you think?",
+      "range": {
+        "startLine": 8,
+        "startChar": 2,
+        "endLine": 8,
+        "endChar": 8
+      },
+      "revId": "55979865c4149d39a989e918a8eb8688b5969308",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "600d4ae5_a7f2260b",
+        "filename": "src/index.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1013096
+      },
+      "writtenOn": "2019-03-19T13:32:57Z",
+      "side": 1,
+      "message": "I guess that this would be DatabaseFactory and the settings would say what database it is. Mongo in this case",
+      "range": {
+        "startLine": 6,
+        "startChar": 23,
+        "endLine": 6,
+        "endChar": 43
+      },
+      "revId": "55979865c4149d39a989e918a8eb8688b5969308",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
