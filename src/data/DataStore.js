@@ -45,8 +45,12 @@ class DataStore {
 
     if (queryBase.from && queryBase.sensorId) {
       const sensorId = parseInt(queryBase.sensorId, 10);
-      const combinedQuery = { $and: [{ from: queryBase.from }, { 'payload.sensorId': sensorId }] };
-      return this.database.find('Data', DataSchema, combinedQuery, queryOptions);
+      queryBase.$and = [{ from: queryBase.from }, { 'payload.sensorId': sensorId }];
+    }
+
+    if (queryBase.deviceIds) {
+      queryBase.from = { $in: queryBase.deviceIds };
+      delete queryBase.deviceIds;
     }
 
     return this.database.find('Data', DataSchema, queryBase, queryOptions);
