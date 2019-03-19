@@ -54,23 +54,50 @@ class DataController {
   }
 
   async list(request, h) {
-    const data = await this.listDataInteractor.execute(request.query);
-    return h.response(data).code(200);
+    const credentials = {
+      uuid: request.headers.auth_id,
+      token: request.headers.auth_token,
+    };
+
+    try {
+      const data = await this.listDataInteractor.execute(credentials, request.query);
+      return h.response(data).code(200);
+    } catch (error) {
+      return h.response(error.message).code(error.code);
+    }
   }
 
   async listByDevice(request, h) {
+    const credentials = {
+      uuid: request.headers.auth_id,
+      token: request.headers.auth_token,
+    };
     const dataQuery = request.query;
     dataQuery.from = request.params.id;
-    const data = await this.listDataInteractor.execute(dataQuery);
-    return h.response(data).code(200);
+
+    try {
+      const data = await this.listDataInteractor.execute(credentials, dataQuery);
+      return h.response(data).code(200);
+    } catch (error) {
+      return h.response(error.message).code(error.code);
+    }
   }
 
   async listBySensor(request, h) {
+    const credentials = {
+      uuid: request.headers.auth_id,
+      token: request.headers.auth_token,
+    };
     const dataQuery = request.query;
     dataQuery.from = request.params.deviceId;
     dataQuery.sensorId = request.params.sensorId;
-    const data = await this.listDataInteractor.execute(dataQuery);
-    return h.response(data).code(200);
+
+    try {
+      const data = await this.listDataInteractor.execute(credentials, dataQuery);
+      return h.response(data).code(200);
+    } catch (error) {
+      return h.response(error.message).code(error.code);
+    }
   }
 }
 
