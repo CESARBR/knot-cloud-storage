@@ -4,5 +4,13 @@
   },
   "server": {
     "port": 80
+  },
+  "meshblu": {
+    "namespace": "meshblu",
+    "messagesNamespace": "messages",
+    "jobTimeoutSeconds": 30,
+    "jobLogSampleRate": 0,
+    "requestQueueName": "v2:request:queue",
+    "responseQueueName": "v2:response:queue"
   }
 }
