@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import httpSignature from 'http-signature';
 
 const messageSchema = Joi.object().keys({
   data: Joi.object().keys({
@@ -29,14 +30,23 @@ function validateMessage(message) {
   }
 }
 
+function verifySignature(request, publicKey) {
+  const parsedReq = httpSignature.parseRequest(request);
+  if (!httpSignature.verifySignature(parsedReq, Buffer.from(publicKey, 'base64').toString('ascii'))) {
+    throw new Error('Signature failed');
+  }
+}
+
 class DataController {
-  constructor(saveDataInteractor, listDataInteractor) {
+  constructor(settings, saveDataInteractor, listDataInteractor) {
+    this.publicKey = settings.server.publicKey;
     this.saveDataInteractor = saveDataInteractor;
     this.listDataInteractor = listDataInteractor;
   }
 
   async save(request, h) {
     try {
+      verifySignature(request, this.publicKey);
       const message = mapRequestToMessage(request);
       validateMessage(message);
       await this.saveDataInteractor.execute(message);

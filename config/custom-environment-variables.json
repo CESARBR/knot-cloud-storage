@@ -6,7 +6,8 @@
     "name": "DB_NAME"
   },
   "server": {
-    "port": "PORT"
+    "port": "PORT",
+    "publicKey": "PUBLIC_KEY_BASE64"
   },
   "meshblu": {
     "aliasLookupServerUri": "MESHBLU_ALIAS_LOOKUP_SERVER_URI",

@@ -8,10 +8,15 @@ Stores the device message received from the webhook service.
 
 ## Parameters
 ### Header Parameters
+
+This endpoint uses the [HTTP Signature Scheme](https://github.com/joyent/node-http-signature/blob/master/http_signing.md#signature-authentication-scheme)
+to authenticate the request.
+
 Field | Required | Description
 --- | --- | ---
 x-meshblu-route | Y | Message route (shows the device that has sent it).
 date | Y | Date on which the message was sent.
+Authorization | Y | Contains a signature that can be verified using the public key in the configuration.
 
 ### Body Parameters
 
