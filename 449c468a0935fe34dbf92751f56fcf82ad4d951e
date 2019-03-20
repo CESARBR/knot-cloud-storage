@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "61b7bdc2_eef7c69e",
+        "filename": "config/custom-environment-variables.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1013086
+      },
+      "writtenOn": "2019-03-20T15:21:21Z",
+      "side": 1,
+      "message": "I\u0027d go for `databaseConfig` instead of `databaseSchema`. Schema is a valid concept in databases, it can generate confusion. We might end with `databaseSchema.schema`.",
+      "parentUuid": "2769ed04_b5c54ba8",
+      "range": {
+        "startLine": 2,
+        "startChar": 3,
+        "endLine": 2,
+        "endChar": 15
+      },
+      "revId": "449c468a0935fe34dbf92751f56fcf82ad4d951e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2881533a_65abf084",
         "filename": "src/data/SettingsFactory.js",
         "patchSetId": 2
