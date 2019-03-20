@@ -1,6 +1,7 @@
 import Hapi from 'server/Hapi';
 import SaveDataInteractor from 'interactors/SaveData';
 import ListDataInteractor from 'interactors/ListData';
+import VerifySignatureInteractor from 'interactors/VerifySignature';
 import DataController from 'controllers/DataController';
 import DataStore from 'data/DataStore';
 import UuidAliasResolverFactory from 'network/UuidAliasResolverFactory';
@@ -19,7 +20,9 @@ class HapiFactory {
     const cloud = new CloudFactory(this.cloudRequester, uuidAliasResolver).create();
     const saveDataInteractor = new SaveDataInteractor(dataStore, uuidAliasResolver);
     const listDataInteractor = new ListDataInteractor(dataStore, cloud);
-    const dataController = new DataController(saveDataInteractor, listDataInteractor);
+    const verifySignatureInteractor = new VerifySignatureInteractor(this.settings.server.publicKey);
+    const dataController = new DataController(saveDataInteractor, listDataInteractor,
+      verifySignatureInteractor);
 
     return new Hapi(this.settings, dataController);
   }

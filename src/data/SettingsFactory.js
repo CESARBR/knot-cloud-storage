@@ -14,6 +14,7 @@ const databaseSchema = Joi.object().keys({
 
 const serverSchema = Joi.object().keys({
   port: Joi.number().port().required(),
+  publicKey: Joi.string().base64().required(),
 });
 
 const meshbluSchema = Joi.object().keys({

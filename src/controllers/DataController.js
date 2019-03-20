@@ -13,9 +13,10 @@ const messageSchema = Joi.object().keys({
 });
 
 class DataController {
-  constructor(saveDataInteractor, listDataInteractor) {
+  constructor(saveDataInteractor, listDataInteractor, verifySignatureInteractor) {
     this.saveDataInteractor = saveDataInteractor;
     this.listDataInteractor = listDataInteractor;
+    this.verifySignatureInteractor = verifySignatureInteractor;
   }
 
   async save(request, h) {
@@ -32,6 +33,7 @@ class DataController {
         throw error;
       }
 
+      await this.verifySignatureInteractor.execute(request);
       await this.saveDataInteractor.execute(message);
       return h.response().code(201);
     } catch (err) {
