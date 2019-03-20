@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4f5ad1ce_485713e7",
+        "filename": "src/data/SettingsFactory.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1013169
+      },
+      "writtenOn": "2019-03-20T22:49:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17acfc73_8227ba06",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 45
+      },
+      "revId": "36ab08f7c79427d9c6946598453d809dfb3f53a3",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82c30750_7e2e9f1f",
         "filename": "src/network/Cloud.js",
         "patchSetId": 3
