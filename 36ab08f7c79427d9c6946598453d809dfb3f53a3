@@ -22,6 +22,30 @@
       "revId": "36ab08f7c79427d9c6946598453d809dfb3f53a3",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6b32e14_3003b760",
+        "filename": "src/network/Cloud.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1013086
+      },
+      "writtenOn": "2019-03-20T17:09:17Z",
+      "side": 1,
+      "message": "Yeah we do :P",
+      "parentUuid": "82c30750_7e2e9f1f",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 3
+      },
+      "revId": "36ab08f7c79427d9c6946598453d809dfb3f53a3",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
     }
   ]
 }
