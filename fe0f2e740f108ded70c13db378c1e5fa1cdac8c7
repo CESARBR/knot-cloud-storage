@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0d860aca_3879205d",
+        "filename": "src/controllers/DataController.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1013169
+      },
+      "writtenOn": "2019-03-20T22:49:00Z",
+      "side": 1,
+      "message": "No, the route comes in the `request.headers[\u0027x-meshblu-route\u0027]` only.",
+      "parentUuid": "0338a1e4_5d1df356",
+      "range": {
+        "startLine": 25,
+        "startChar": 17,
+        "endLine": 25,
+        "endChar": 63
+      },
+      "revId": "fe0f2e740f108ded70c13db378c1e5fa1cdac8c7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75e53682_7db4095c",
         "filename": "src/data/DataStore.js",
         "patchSetId": 4
@@ -162,6 +186,24 @@
       "writtenOn": "2019-03-20T17:04:17Z",
       "side": 1,
       "message": "Not a problem for now, but same a previous patches, it seems still too attached to mongo.\nHow would this behave if the database is not mongo?",
+      "revId": "fe0f2e740f108ded70c13db378c1e5fa1cdac8c7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a46d50_6f84f0a4",
+        "filename": "src/server/HapiFactory.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013169
+      },
+      "writtenOn": "2019-03-20T22:49:00Z",
+      "side": 1,
+      "message": "FYI: I\u0027ve discussed with Paulo via slack and this was my explanation (portuguese because it\u0027s a quotation) about why we should keep the DataStore (correct me if I\u0027m wrong):\n\n\"Vê, sobre a sugestão de remoção do `DataStore`:\n\nNa verdade essa camada a mais é o que fornece uma abstração maior para os casos em que a tecnologia de infraestrutura (database), entende? Ela é responsável por resolver os gaps entre as necessidades da aplicação e a API no banco (nesse caso optamos por fazer wrapper do mongoose, mas poderia ser um driver/procedimento remoto).\n\nNo caso da adição de suporte a outro database, nós só mudamos o `DataStore` e continuaríamos com a API idêntica para os interactors (casos de uso) trabalharem sem quaisquer modificações.\n\nDe onde isso vem: Clean Architecture. Essa é uma das ideias dessa arquitetura para deixar a infraestrutura abstraída para os casos de uso.\"",
+      "parentUuid": "aab88158_c196cd2c",
       "revId": "fe0f2e740f108ded70c13db378c1e5fa1cdac8c7",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
