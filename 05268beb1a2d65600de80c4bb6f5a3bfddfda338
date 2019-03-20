@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53fbdac8_fbaf26b4",
+        "filename": "src/interactors/ListData.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1013086
+      },
+      "writtenOn": "2019-03-20T17:03:45Z",
+      "side": 1,
+      "message": "Instead of multiple queries, you can run only one specifying an array of IDs, something like: https://stackoverflow.com/questions/8303900/mongodb-mongoose-findmany-find-all-documents-with-ids-listed-in-array",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 8
+      },
+      "revId": "05268beb1a2d65600de80c4bb6f5a3bfddfda338",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
