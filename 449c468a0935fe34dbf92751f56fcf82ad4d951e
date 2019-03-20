@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "2407b933_5da8166b",
+        "filename": "config/custom-environment-variables.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1013169
+      },
+      "writtenOn": "2019-03-20T22:50:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b99813ba_854e0bf7",
+      "range": {
+        "startLine": 2,
+        "startChar": 3,
+        "endLine": 2,
+        "endChar": 15
+      },
+      "revId": "449c468a0935fe34dbf92751f56fcf82ad4d951e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2881533a_65abf084",
         "filename": "src/data/SettingsFactory.js",
         "patchSetId": 2
@@ -87,6 +111,24 @@
       "revId": "449c468a0935fe34dbf92751f56fcf82ad4d951e",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28e7d7b0_ecb2f7a7",
+        "filename": "src/data/SettingsFactory.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013169
+      },
+      "writtenOn": "2019-03-20T22:50:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2881533a_65abf084",
+      "revId": "449c468a0935fe34dbf92751f56fcf82ad4d951e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     },
     {
       "key": {
@@ -113,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "42dcb5fc_19112450",
+        "filename": "src/data/SettingsFactory.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1013169
+      },
+      "writtenOn": "2019-03-20T22:50:25Z",
+      "side": 1,
+      "message": "I prefer to use the `Joi.valid()` method since its error is more descriptive.",
+      "parentUuid": "564ad9a2_77b484bd",
+      "range": {
+        "startLine": 7,
+        "startChar": 39,
+        "endLine": 7,
+        "endChar": 40
+      },
+      "revId": "449c468a0935fe34dbf92751f56fcf82ad4d951e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec404e3f_66027c33",
         "filename": "src/data/SettingsFactory.js",
         "patchSetId": 2
@@ -124,6 +190,30 @@
       "writtenOn": "2019-03-20T14:51:04Z",
       "side": 1,
       "message": "You\u0027re specifying the name as required but in \u0027development.json\u0027 you don\u0027t have the field. Is this necessary?",
+      "range": {
+        "startLine": 12,
+        "startChar": 21,
+        "endLine": 12,
+        "endChar": 29
+      },
+      "revId": "449c468a0935fe34dbf92751f56fcf82ad4d951e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96ed3eb6_4ea24342",
+        "filename": "src/data/SettingsFactory.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1013169
+      },
+      "writtenOn": "2019-03-20T22:50:25Z",
+      "side": 1,
+      "message": "We don\u0027t need to have it in the \u0027development.json\u0027 since it is already in the \u0027default.json\u0027. The config package takes the \u0027default.json\u0027 as the base file.",
+      "parentUuid": "ec404e3f_66027c33",
       "range": {
         "startLine": 12,
         "startChar": 21,
