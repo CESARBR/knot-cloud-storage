@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0338a1e4_5d1df356",
+        "filename": "src/controllers/DataController.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1013086
+      },
+      "writtenOn": "2019-03-20T15:26:34Z",
+      "side": 1,
+      "message": "Doesn\u0027t the route come in the payload?",
+      "range": {
+        "startLine": 25,
+        "startChar": 17,
+        "endLine": 25,
+        "endChar": 63
+      },
+      "revId": "fe0f2e740f108ded70c13db378c1e5fa1cdac8c7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
