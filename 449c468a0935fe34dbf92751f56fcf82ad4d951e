@@ -90,6 +90,29 @@
     },
     {
       "key": {
+        "uuid": "564ad9a2_77b484bd",
+        "filename": "src/data/SettingsFactory.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1013096
+      },
+      "writtenOn": "2019-03-20T18:14:10Z",
+      "side": 1,
+      "message": "add the `.allow([\u0027MONGO\u0027])` to allow just the database that we support",
+      "range": {
+        "startLine": 7,
+        "startChar": 39,
+        "endLine": 7,
+        "endChar": 40
+      },
+      "revId": "449c468a0935fe34dbf92751f56fcf82ad4d951e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec404e3f_66027c33",
         "filename": "src/data/SettingsFactory.js",
         "patchSetId": 2
