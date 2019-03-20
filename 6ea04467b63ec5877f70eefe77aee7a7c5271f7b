@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14862da9_9e524481",
+        "filename": "README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1013086
+      },
+      "writtenOn": "2019-03-20T16:51:59Z",
+      "side": 1,
+      "message": "We don\u0027t need to specify this. The user needs only to know that it can list the device messages.",
+      "range": {
+        "startLine": 62,
+        "startChar": 28,
+        "endLine": 62,
+        "endChar": 62
+      },
+      "revId": "6ea04467b63ec5877f70eefe77aee7a7c5271f7b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ba4e897_a399a346",
+        "filename": "README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1013086
+      },
+      "writtenOn": "2019-03-20T16:51:59Z",
+      "side": 1,
+      "message": "Besides the limit, we need to have the starting point, so that the user can paginate. KD o Bloco backend has `skip` and `take` instead of limit. Besides that, I think that it is a good idea to limit `take`, so that the user doesn\u0027t overload the server.",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 5
+      },
+      "revId": "6ea04467b63ec5877f70eefe77aee7a7c5271f7b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94284187_33e8c608",
+        "filename": "README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1013086
+      },
+      "writtenOn": "2019-03-20T16:51:59Z",
+      "side": 1,
+      "message": "`startDate` and `finishDate` will avoid confusion with `limit`/`skip`/`take`",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 5
+      },
+      "revId": "6ea04467b63ec5877f70eefe77aee7a7c5271f7b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7f6bc4b_6111ac04",
+        "filename": "README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1013086
+      },
+      "writtenOn": "2019-03-20T16:51:59Z",
+      "side": 1,
+      "message": "\u0026",
+      "range": {
+        "startLine": 77,
+        "startChar": 48,
+        "endLine": 77,
+        "endChar": 49
+      },
+      "revId": "6ea04467b63ec5877f70eefe77aee7a7c5271f7b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8294119b_533d5fb6",
+        "filename": "src/data/DataStore.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1013086
+      },
+      "writtenOn": "2019-03-20T16:51:59Z",
+      "side": 1,
+      "message": "as we are using lodash, this can be implemented with _.omit. With this we avoid side effects due to changing the original `query` object.",
+      "range": {
+        "startLine": 30,
+        "startChar": 1,
+        "endLine": 36,
+        "endChar": 14
+      },
+      "revId": "6ea04467b63ec5877f70eefe77aee7a7c5271f7b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd6dd309_ea7697db",
+        "filename": "src/data/MongoDatabase.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1013086
+      },
+      "writtenOn": "2019-03-20T16:51:59Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this logic be above this layer?",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 99
+      },
+      "revId": "6ea04467b63ec5877f70eefe77aee7a7c5271f7b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
