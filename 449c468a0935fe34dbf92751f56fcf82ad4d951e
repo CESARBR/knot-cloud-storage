@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b99813ba_854e0bf7",
+        "filename": "config/custom-environment-variables.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1015148
+      },
+      "writtenOn": "2019-03-20T16:15:34Z",
+      "side": 1,
+      "message": "+1 on config.",
+      "parentUuid": "61b7bdc2_eef7c69e",
+      "range": {
+        "startLine": 2,
+        "startChar": 3,
+        "endLine": 2,
+        "endChar": 15
+      },
+      "revId": "449c468a0935fe34dbf92751f56fcf82ad4d951e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2881533a_65abf084",
         "filename": "src/data/SettingsFactory.js",
         "patchSetId": 2
