@@ -22,6 +22,30 @@
       "revId": "05268beb1a2d65600de80c4bb6f5a3bfddfda338",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f917251_04da9999",
+        "filename": "src/interactors/ListData.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1013169
+      },
+      "writtenOn": "2019-03-20T22:49:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53fbdac8_fbaf26b4",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 8
+      },
+      "revId": "05268beb1a2d65600de80c4bb6f5a3bfddfda338",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
