@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ca2a1849_c93b20a1",
+        "filename": "README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1013169
+      },
+      "writtenOn": "2019-03-20T14:39:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e682c207_90b81397",
+      "range": {
+        "startLine": 3,
+        "startChar": 74,
+        "endLine": 3,
+        "endChar": 86
+      },
+      "revId": "269eb763d32bbb3627381c58dad9f9851702f869",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ccd8bf2_9a83e7a6",
         "filename": "README.md",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b0366e3a_437e9e82",
+        "filename": "README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1013169
+      },
+      "writtenOn": "2019-03-20T14:39:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ccd8bf2_9a83e7a6",
+      "range": {
+        "startLine": 20,
+        "startChar": 25,
+        "endLine": 20,
+        "endChar": 35
+      },
+      "revId": "269eb763d32bbb3627381c58dad9f9851702f869",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7634eba_3080aeb6",
         "filename": "src/controllers/DataController.js",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2019-03-19T13:40:49Z",
       "side": 1,
       "message": "before save the data the controller must to verify if the request was signed. As the meshblu says here: https://meshblu.readme.io/docs/forwarding-webhook-2-0#signed-requests",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 12
+      },
+      "revId": "269eb763d32bbb3627381c58dad9f9851702f869",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b0638d3_b426a077",
+        "filename": "src/controllers/DataController.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1013169
+      },
+      "writtenOn": "2019-03-20T14:39:08Z",
+      "side": 1,
+      "message": "This will be done by another task.",
+      "parentUuid": "f7634eba_3080aeb6",
       "range": {
         "startLine": 6,
         "startChar": 8,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "2dcac9ae_d912c410",
+        "filename": "src/controllers/DataController.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1013169
+      },
+      "writtenOn": "2019-03-20T14:39:08Z",
+      "side": 1,
+      "message": "I think this error doesn\u0027t matter to the webhook and it\u0027d be better to keep fixed.",
+      "parentUuid": "974de3c0_0acc5771",
+      "range": {
+        "startLine": 11,
+        "startChar": 31,
+        "endLine": 11,
+        "endChar": 34
+      },
+      "revId": "269eb763d32bbb3627381c58dad9f9851702f869",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2da895f6_158c6663",
         "filename": "src/interactors/SaveData.js",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "269eb763d32bbb3627381c58dad9f9851702f869",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b23a94_8c90a414",
+        "filename": "src/interactors/SaveData.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1013169
+      },
+      "writtenOn": "2019-03-20T14:39:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2da895f6_158c6663",
+      "range": {
+        "startLine": 15,
+        "startChar": 16,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "269eb763d32bbb3627381c58dad9f9851702f869",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
