@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3cd6804f_34e7a0ae",
+        "filename": "src/data/MongoDatabaseFactory.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1013169
+      },
+      "writtenOn": "2019-03-20T14:41:04Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "29107c15_f915a217",
+      "range": {
+        "startLine": 8,
+        "startChar": 2,
+        "endLine": 8,
+        "endChar": 8
+      },
+      "revId": "55979865c4149d39a989e918a8eb8688b5969308",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3f21b06_55a986b2",
         "filename": "src/data/SettingsFactory.js",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d913bfe0_df3d08f8",
+        "filename": "src/data/SettingsFactory.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1013169
+      },
+      "writtenOn": "2019-03-20T14:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3f21b06_55a986b2",
+      "range": {
+        "startLine": 8,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 21
+      },
+      "revId": "55979865c4149d39a989e918a8eb8688b5969308",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "600d4ae5_a7f2260b",
         "filename": "src/index.js",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "55979865c4149d39a989e918a8eb8688b5969308",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f918232_d8a5b512",
+        "filename": "src/index.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1013169
+      },
+      "writtenOn": "2019-03-20T14:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "600d4ae5_a7f2260b",
+      "range": {
+        "startLine": 6,
+        "startChar": 23,
+        "endLine": 6,
+        "endChar": 43
+      },
+      "revId": "55979865c4149d39a989e918a8eb8688b5969308",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
