@@ -140,6 +140,30 @@
       "revId": "55979865c4149d39a989e918a8eb8688b5969308",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7445ce3d_a53f9ab5",
+        "filename": "src/index.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1015148
+      },
+      "writtenOn": "2019-03-20T14:51:04Z",
+      "side": 1,
+      "message": "+1\n\nAgree on that. Since we\u0027re already thinking about having other databases, I think it should be a generic database factory.",
+      "parentUuid": "600d4ae5_a7f2260b",
+      "range": {
+        "startLine": 6,
+        "startChar": 23,
+        "endLine": 6,
+        "endChar": 43
+      },
+      "revId": "55979865c4149d39a989e918a8eb8688b5969308",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
     }
   ]
 }

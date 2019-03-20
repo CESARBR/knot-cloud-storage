@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2769ed04_b5c54ba8",
+        "filename": "config/custom-environment-variables.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1015148
+      },
+      "writtenOn": "2019-03-20T14:51:04Z",
+      "side": 1,
+      "message": "I\u0027m aware we\u0027re using \u0027Type\u0027 in other packages, such as to specify KNOT_CLOUD or FIWARE. However, I\u0027m not very sure this is the best name.\nPerhaps we could use \u0027database\u0027 where we now have \u0027databaseType\u0027 to determine which is the DB being used and \u0027databaseSchema\u0027 when we\u0027re talking about the fields.\nIf it\u0027s common for all (or most) dbs to have these fields, \u0027databaseSchema\u0027 sounds OK. Otherwise we could even have a \u0027mongoSchema\u0027, \u0027mySQLSchema\u0027, etc...",
+      "range": {
+        "startLine": 2,
+        "startChar": 3,
+        "endLine": 2,
+        "endChar": 15
+      },
+      "revId": "449c468a0935fe34dbf92751f56fcf82ad4d951e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2881533a_65abf084",
+        "filename": "src/data/SettingsFactory.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015148
+      },
+      "writtenOn": "2019-03-20T14:51:04Z",
+      "side": 1,
+      "message": "Looking ahead to having other databases, I\u0027d suggest we have a list of allowed DBs and verify the schema based on the fields necessary for that DB.\nSimilar to what is being/will be done for the mailService.\nThe two main reasons:\n- We enforce that we can only use the databases we provide support.\n- If in the future some needs another fields, it\u0027ll be easier to adapt IMO.",
+      "revId": "449c468a0935fe34dbf92751f56fcf82ad4d951e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec404e3f_66027c33",
+        "filename": "src/data/SettingsFactory.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1015148
+      },
+      "writtenOn": "2019-03-20T14:51:04Z",
+      "side": 1,
+      "message": "You\u0027re specifying the name as required but in \u0027development.json\u0027 you don\u0027t have the field. Is this necessary?",
+      "range": {
+        "startLine": 12,
+        "startChar": 21,
+        "endLine": 12,
+        "endChar": 29
+      },
+      "revId": "449c468a0935fe34dbf92751f56fcf82ad4d951e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
