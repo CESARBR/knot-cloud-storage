@@ -46,6 +46,30 @@
       "revId": "4fe432c335e72dfdf2a831314b312b829963357a",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a062d1_e0bd6186",
+        "filename": ".eslintrc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1013086
+      },
+      "writtenOn": "2019-03-20T15:11:19Z",
+      "side": 1,
+      "message": "Just noticed that an ESLint plugin is missing. Replace this patch with the installation of this plugin (mind the version):\n\nnpm i --save-dev eslint-import-resolver-babel-module@4",
+      "parentUuid": "2529b940_7c402ef6",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 8
+      },
+      "revId": "4fe432c335e72dfdf2a831314b312b829963357a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
     }
   ]
 }
