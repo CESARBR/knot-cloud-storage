@@ -22,6 +22,172 @@
       "revId": "fe0f2e740f108ded70c13db378c1e5fa1cdac8c7",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75e53682_7db4095c",
+        "filename": "src/data/DataStore.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015148
+      },
+      "writtenOn": "2019-03-20T17:04:17Z",
+      "side": 1,
+      "message": "Delete.",
+      "revId": "fe0f2e740f108ded70c13db378c1e5fa1cdac8c7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70568a0b_40e652b4",
+        "filename": "src/data/MongoDatabase.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1015148
+      },
+      "writtenOn": "2019-03-20T17:04:17Z",
+      "side": 1,
+      "message": "const DataSchema \u003d mongoose.Schema({\n\t\n  from: {\n\t\n    type: String,\n\t\n    required: true,\n\t\n  },\n\t\n  timestamp: {\n\t\n    type: Date,\n\t\n    default: Date.now,\n\t\n    required: true,\n\t\n  },\n\t\n  payload: {\n\t\n    type: Object,\n\t\n    required: true,\n\t\n  },\n\t\n});",
+      "revId": "fe0f2e740f108ded70c13db378c1e5fa1cdac8c7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc303c7a_462e361e",
+        "filename": "src/data/MongoDatabase.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1015148
+      },
+      "writtenOn": "2019-03-20T17:04:17Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 13,
+        "startChar": 13,
+        "endLine": 13,
+        "endChar": 26
+      },
+      "revId": "fe0f2e740f108ded70c13db378c1e5fa1cdac8c7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f61bb9cd_93851fd1",
+        "filename": "src/data/MongoDatabase.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1015148
+      },
+      "writtenOn": "2019-03-20T17:04:17Z",
+      "side": 1,
+      "message": "\u0027Data\u0027, DataSchema",
+      "range": {
+        "startLine": 14,
+        "startChar": 38,
+        "endLine": 14,
+        "endChar": 50
+      },
+      "revId": "fe0f2e740f108ded70c13db378c1e5fa1cdac8c7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b79fd4df_e4b85f05",
+        "filename": "src/interactors/SaveData.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1015148
+      },
+      "writtenOn": "2019-03-20T17:04:17Z",
+      "side": 1,
+      "message": "constructor(database) {\n    this.database \u003d database;\n  }",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 3
+      },
+      "revId": "fe0f2e740f108ded70c13db378c1e5fa1cdac8c7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba4ed4ad_41f9b7c0",
+        "filename": "src/interactors/SaveData.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1015148
+      },
+      "writtenOn": "2019-03-20T17:04:17Z",
+      "side": 1,
+      "message": "database",
+      "range": {
+        "startLine": 25,
+        "startChar": 15,
+        "endLine": 25,
+        "endChar": 24
+      },
+      "revId": "fe0f2e740f108ded70c13db378c1e5fa1cdac8c7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab88158_c196cd2c",
+        "filename": "src/server/HapiFactory.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015148
+      },
+      "writtenOn": "2019-03-20T17:04:17Z",
+      "side": 1,
+      "message": "Not a problem for now, but same a previous patches, it seems still too attached to mongo.\nHow would this behave if the database is not mongo?",
+      "revId": "fe0f2e740f108ded70c13db378c1e5fa1cdac8c7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b41fdcdc_b21b46e0",
+        "filename": "src/server/HapiFactory.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1015148
+      },
+      "writtenOn": "2019-03-20T17:04:17Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 39
+      },
+      "revId": "fe0f2e740f108ded70c13db378c1e5fa1cdac8c7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
     }
   ]
 }
