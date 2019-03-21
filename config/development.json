@@ -1,5 +1,5 @@
 {
-  "database": {
+  "databaseConfig": {
     "hostname": "localhost",
     "port": 27017
   },
