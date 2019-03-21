@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "fe99c354_fa9aa43a",
+        "filename": "src/controllers/DataController.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1013086
+      },
+      "writtenOn": "2019-03-21T14:01:53Z",
+      "side": 1,
+      "message": "Forget this, I asked Joao to make it in his patch.",
+      "parentUuid": "a949b67b_63befcd9",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 8
+      },
+      "revId": "9bc4a7bba25d1a4231237444c3cbea7c97e13f24",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc44f7ad_035dabe6",
         "filename": "src/controllers/DataController.js",
         "patchSetId": 1
@@ -59,6 +83,30 @@
       "writtenOn": "2019-03-21T13:40:34Z",
       "side": 1,
       "message": "When you move the interactor\u0027s code to this class, could you move this to a similar method? Could be `validateMessage`",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 7
+      },
+      "revId": "9bc4a7bba25d1a4231237444c3cbea7c97e13f24",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18fbadbd_2cc1aaa4",
+        "filename": "src/controllers/DataController.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1013086
+      },
+      "writtenOn": "2019-03-21T14:01:53Z",
+      "side": 1,
+      "message": "Forget this, I asked Joao to make it in his patch.",
+      "parentUuid": "bc44f7ad_035dabe6",
       "range": {
         "startLine": 31,
         "startChar": 6,
