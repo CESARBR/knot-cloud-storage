@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cfc5b6d_39c061ae",
+        "filename": "src/server/Hapi.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1015148
+      },
+      "writtenOn": "2019-03-21T18:36:52Z",
+      "side": 1,
+      "message": "As a suggestion/nitpicking, this could be done in the patch where the Hapi server is created.",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 8
+      },
+      "revId": "dc8ead36ca82e2da7d2182c0e36d3337b83b0b39",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
