@@ -16,6 +16,24 @@
       "revId": "0c1ef32aa0a6f9ec3ad270dc47e806399dd72249",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e57f4907_26987aec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013169
+      },
+      "writtenOn": "2019-03-21T18:00:22Z",
+      "side": 1,
+      "message": "Yep, I\u0027ll update it. Tks!",
+      "parentUuid": "5c4b2d3d_c0e2ac9a",
+      "revId": "0c1ef32aa0a6f9ec3ad270dc47e806399dd72249",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
     }
   ]
 }
