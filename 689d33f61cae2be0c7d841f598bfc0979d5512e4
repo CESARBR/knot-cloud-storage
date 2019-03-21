@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efe2d561_d21e92e7",
+        "filename": "src/data/Settings.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1015148
+      },
+      "writtenOn": "2019-03-21T18:25:00Z",
+      "side": 1,
+      "message": "database, databaseConfig",
+      "range": {
+        "startLine": 2,
+        "startChar": 14,
+        "endLine": 2,
+        "endChar": 26
+      },
+      "revId": "689d33f61cae2be0c7d841f598bfc0979d5512e4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ba580e_b7f4ac51",
+        "filename": "src/data/Settings.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1015148
+      },
+      "writtenOn": "2019-03-21T18:25:00Z",
+      "side": 1,
+      "message": "this.database \u003d database; //or databaseName, perhaps?\nthis.databaseConfig \u003d databaseConfig; //or databaseSettings",
+      "range": {
+        "startLine": 3,
+        "startChar": 4,
+        "endLine": 4,
+        "endChar": 29
+      },
+      "revId": "689d33f61cae2be0c7d841f598bfc0979d5512e4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c981fc_2a1f5d38",
+        "filename": "src/index.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1015148
+      },
+      "writtenOn": "2019-03-21T18:25:00Z",
+      "side": 1,
+      "message": "settings.database, settings.databaseConfig",
+      "range": {
+        "startLine": 6,
+        "startChar": 39,
+        "endLine": 6,
+        "endChar": 79
+      },
+      "revId": "689d33f61cae2be0c7d841f598bfc0979d5512e4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
