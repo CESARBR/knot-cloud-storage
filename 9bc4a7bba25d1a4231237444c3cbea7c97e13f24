@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b47cb30_c0692764",
+        "filename": "package.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1013086
+      },
+      "writtenOn": "2019-03-21T13:40:34Z",
+      "side": 1,
+      "message": "Please add the package-lock.json changes made by adding this package.",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 19
+      },
+      "revId": "9bc4a7bba25d1a4231237444c3cbea7c97e13f24",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a949b67b_63befcd9",
+        "filename": "src/controllers/DataController.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1013086
+      },
+      "writtenOn": "2019-03-21T13:40:34Z",
+      "side": 1,
+      "message": "And this could be moved to `mapRequestToMessage`",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 8
+      },
+      "revId": "9bc4a7bba25d1a4231237444c3cbea7c97e13f24",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc44f7ad_035dabe6",
+        "filename": "src/controllers/DataController.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1013086
+      },
+      "writtenOn": "2019-03-21T13:40:34Z",
+      "side": 1,
+      "message": "When you move the interactor\u0027s code to this class, could you move this to a similar method? Could be `validateMessage`",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 7
+      },
+      "revId": "9bc4a7bba25d1a4231237444c3cbea7c97e13f24",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d583079_3617c62a",
+        "filename": "src/controllers/DataController.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1013086
+      },
+      "writtenOn": "2019-03-21T13:40:34Z",
+      "side": 1,
+      "message": "And here you would have `verifySignature`. It could be moved to the beginning, so that if the validation fails, we don\u0027t make any request parsing.",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 60
+      },
+      "revId": "9bc4a7bba25d1a4231237444c3cbea7c97e13f24",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1844ce9a_9897a384",
+        "filename": "src/interactors/VerifySignature.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013086
+      },
+      "writtenOn": "2019-03-21T13:40:34Z",
+      "side": 1,
+      "message": "This is not conceptually what an interactor is, but rather is part of an interaction\u0027s job. It is making some validation prior to the interactor\u0027s job. I\u0027m not sure where it is best to put this code (what kind of entity it is), but making it an interactor might confuse the reader that is familiar with the term. Move this code to the controller, like it is being done with the Joi validation.",
+      "revId": "9bc4a7bba25d1a4231237444c3cbea7c97e13f24",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
