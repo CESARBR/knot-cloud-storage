@@ -156,6 +156,24 @@
       "revId": "9bc4a7bba25d1a4231237444c3cbea7c97e13f24",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c2ef75_5d9c0f61",
+        "filename": "src/interactors/VerifySignature.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013169
+      },
+      "writtenOn": "2019-03-21T14:38:39Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "1844ce9a_9897a384",
+      "revId": "9bc4a7bba25d1a4231237444c3cbea7c97e13f24",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
     }
   ]
 }
