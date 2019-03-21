@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1847e3d1_a954ac04",
+        "filename": "src/controllers/DataController.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1013086
+      },
+      "writtenOn": "2019-03-21T14:00:59Z",
+      "side": 1,
+      "message": "Extract this to a method, e.g. `mapRequestToMessage`",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 8
+      },
+      "revId": "5eb6051ecf4d4eab4d5596b7da8c90f5e7f951ab",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab60e6f_eb33bc33",
+        "filename": "src/controllers/DataController.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1013086
+      },
+      "writtenOn": "2019-03-21T14:00:59Z",
+      "side": 1,
+      "message": "Extract this to a method, e.g. `validateMessage`",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 32,
+        "endChar": 7
+      },
+      "revId": "5eb6051ecf4d4eab4d5596b7da8c90f5e7f951ab",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
