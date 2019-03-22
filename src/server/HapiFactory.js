@@ -19,7 +19,11 @@ class HapiFactory {
     const cloud = new CloudFactory(this.cloudRequester, uuidAliasResolver).create();
     const saveDataInteractor = new SaveDataInteractor(dataStore, uuidAliasResolver);
     const listDataInteractor = new ListDataInteractor(dataStore, cloud);
-    const dataController = new DataController(saveDataInteractor, listDataInteractor);
+    const dataController = new DataController(
+      this.settings,
+      saveDataInteractor,
+      listDataInteractor,
+    );
 
     return new Hapi(this.settings, dataController);
   }
