@@ -1,7 +1,6 @@
 import SettingsFactory from 'data/SettingsFactory';
 import DatabaseFactory from 'data/DatabaseFactory';
 import CloudRequesterFactory from 'network/CloudRequesterFactory';
-
 import HapiFactory from 'server/HapiFactory';
 
 async function main() {
