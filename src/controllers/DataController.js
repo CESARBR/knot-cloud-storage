@@ -38,10 +38,11 @@ function verifySignature(request, publicKey) {
 }
 
 class DataController {
-  constructor(settings, saveDataInteractor, listDataInteractor) {
+  constructor(settings, saveDataInteractor, listDataInteractor, logger) {
     this.publicKey = settings.server.publicKey;
     this.saveDataInteractor = saveDataInteractor;
     this.listDataInteractor = listDataInteractor;
+    this.logger = logger;
   }
 
   async save(request, h) {
@@ -50,8 +51,10 @@ class DataController {
       const message = mapRequestToMessage(request);
       validateMessage(message);
       await this.saveDataInteractor.execute(message);
+      this.logger.info('Data saved');
       return h.response().code(201);
     } catch (err) {
+      this.logger.error(`Failed saving data: ${err.message}`);
       return h.response().code(400);
     }
   }
@@ -64,8 +67,10 @@ class DataController {
 
     try {
       const data = await this.listDataInteractor.execute(credentials, request.query);
+      this.logger.info('Data obtained');
       return h.response(data).code(200);
     } catch (error) {
+      this.logger.error(`Failed to list data (${error.code || 500}): ${error.message}`);
       return h.response(error.message).code(error.code);
     }
   }
@@ -80,8 +85,10 @@ class DataController {
 
     try {
       const data = await this.listDataInteractor.execute(credentials, dataQuery);
+      this.logger.info('Data obtained');
       return h.response(data).code(200);
     } catch (error) {
+      this.logger.error(`Failed to list data (${error.code || 500}): ${error.message}`);
       return h.response(error.message).code(error.code);
     }
   }
@@ -97,8 +104,10 @@ class DataController {
 
     try {
       const data = await this.listDataInteractor.execute(credentials, dataQuery);
+      this.logger.info('Data obtained');
       return h.response(data).code(200);
     } catch (error) {
+      this.logger.error(`Failed to list data (${error.code || 500}): ${error.message}`);
       return h.response(error.message).code(error.code);
     }
   }

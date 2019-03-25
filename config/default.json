@@ -13,5 +13,8 @@
     "jobLogSampleRate": 0,
     "requestQueueName": "v2:request:queue",
     "responseQueueName": "v2:response:queue"
+  },
+  "logger": {
+    "level": "info"
   }
 }

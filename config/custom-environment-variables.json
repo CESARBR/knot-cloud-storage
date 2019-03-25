@@ -19,5 +19,8 @@
     "jobLogSampleRate": "MESHBLU_JOB_LOG_SAMPLE_RATE",
     "requestQueueName": "MESHBLU_REQUEST_QUEUE_NAME",
     "responseQueueName": "MESHBLU_RESPONSE_QUEUE_NAME"
+  },
+  "logger": {
+    "level": "LOGGER_LEVEL"
   }
 }

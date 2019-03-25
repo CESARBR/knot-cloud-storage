@@ -1,9 +1,12 @@
 import hapi from 'hapi';
+import good from 'good';
+import goodWinston from 'hapi-good-winston';
 
 class HapiServer {
-  constructor(settings, dataController) {
+  constructor(settings, dataController, logger) {
     this.settings = settings;
     this.dataController = dataController;
+    this.logger = logger;
   }
 
   async start() {
@@ -13,9 +16,26 @@ class HapiServer {
         stripTrailingSlash: true,
       },
     });
+    const goodOptions = {
+      ops: false,
+      reporters: {
+        winston: [goodWinston(this.logger)],
+      },
+    };
 
-    await server.route(this.createServerRoutes());
-    await server.start();
+    try {
+      await server.register([
+        {
+          plugin: good,
+          options: goodOptions,
+        },
+      ]);
+      await server.route(this.createServerRoutes());
+      await server.start();
+      this.logger.info(`Listening on ${this.settings.server.port}`);
+    } catch (err) {
+      this.logger.error(err);
+    }
   }
 
   createServerRoutes() {
