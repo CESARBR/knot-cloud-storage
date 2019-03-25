@@ -30,15 +30,20 @@ const meshbluSchema = Joi.object().keys({
   responseQueueName: Joi.string().required(),
 });
 
+const levels = ['error', 'warn', 'info', 'verbose', 'debug', 'silly'];
+const loggerSchema = Joi.object().keys({
+  level: Joi.string().valid(levels).required(),
+});
+
 class SettingsFactory {
   create() {
     const database = this.loadDatabaseSettings();
     const databaseConfig = this.loadDatabaseConfigSettings();
     const server = this.loadServerSettings();
     const meshblu = this.loadMeshbluSettings();
-    return new Settings(database, databaseConfig, server, meshblu);
+    const logger = this.loadLoggerSettings();
+    return new Settings(database, databaseConfig, server, meshblu, logger);
   }
-
 
   loadDatabaseSettings() {
     const database = config.get('database');
@@ -62,6 +67,12 @@ class SettingsFactory {
     const meshblu = config.get('meshblu');
     this.validate('meshblu', meshblu, meshbluSchema);
     return meshblu;
+  }
+
+  loadLoggerSettings() {
+    const logger = config.get('logger');
+    this.validate('logger', logger, loggerSchema);
+    return logger;
   }
 
   validate(propertyName, propertyValue, schema) {
