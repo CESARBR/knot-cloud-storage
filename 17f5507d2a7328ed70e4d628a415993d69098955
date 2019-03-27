@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "099da9d5_b7e9b62c",
+        "filename": "src/server/HapiFactory.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1013086
+      },
+      "writtenOn": "2019-03-27T17:01:39Z",
+      "side": 1,
+      "message": "DataController. The precise context is important so that we can track down where something happens.",
+      "range": {
+        "startLine": 23,
+        "startChar": 60,
+        "endLine": 23,
+        "endChar": 66
+      },
+      "revId": "17f5507d2a7328ed70e4d628a415993d69098955",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
