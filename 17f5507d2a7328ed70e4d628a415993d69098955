@@ -22,6 +22,30 @@
       "revId": "17f5507d2a7328ed70e4d628a415993d69098955",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc4ea473_8562f403",
+        "filename": "src/server/HapiFactory.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1013169
+      },
+      "writtenOn": "2019-04-04T18:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "099da9d5_b7e9b62c",
+      "range": {
+        "startLine": 23,
+        "startChar": 60,
+        "endLine": 23,
+        "endChar": 66
+      },
+      "revId": "17f5507d2a7328ed70e4d628a415993d69098955",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
