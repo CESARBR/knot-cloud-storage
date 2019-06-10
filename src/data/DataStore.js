@@ -46,6 +46,7 @@ class DataStore {
     if (queryBase.from && queryBase.sensorId) {
       const sensorId = parseInt(queryBase.sensorId, 10);
       queryBase.$and = [{ from: queryBase.from }, { 'payload.sensorId': sensorId }];
+      delete queryBase.sensorId;
     }
 
     if (queryBase.deviceIds) {
