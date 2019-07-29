@@ -9,8 +9,15 @@ class ListData {
       return this.getDevicesData(credentials, query);
     }
 
-    await this.cloud.getDevice(credentials, query.from);
+    await this.verifyAuthorization(credentials, query.from);
     return this.dataStore.list(query);
+  }
+
+  async verifyAuthorization(credentials, deviceId) {
+    const authDevice = await this.cloud.getDevice(credentials, credentials.uuid);
+    return authDevice.type === 'knot:app'
+      ? this.cloud.getDevice(credentials, deviceId, authDevice.knot.router)
+      : this.cloud.getDevice(credentials, deviceId);
   }
 
   async getDevicesData(credentials, query) {
