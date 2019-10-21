@@ -1,3 +1,14 @@
+## [1.0.3](https://github.com/CESARBR/knot-cloud-storage/compare/v1.0.2...v1.0.3)
+
+### Bug Fixes
+
+- Fix list data as a KNoT 'app'.
+
+### Improvements
+
+- Add pull request template.
+- Bump lodash, eslint-utils and mixin-deep dependencies to avoid security issues.
+
 ## [1.0.2](https://github.com/CESARBR/knot-cloud-storage/compare/v1.0.1...v1.0.2)
 
 ### Bug Fixes
