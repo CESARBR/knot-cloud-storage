@@ -2,7 +2,6 @@
 
 A web server that receives messages forwarded by devices and stores them in a database. This service is currently being rewritten in golang to become suitable for running on constrained boards. The legacy instructions can be seen [here](LEGACY.md).
 
-
 ## Installation and usage
 
 ### Requirements
@@ -36,8 +35,53 @@ make deps
 make run
 ```
 
-### Verify
+## Local (Development)
 
+### Build and run (Docker)
+
+#### Production
+
+A container is specified at `docker/Dockerfile`. To use it, execute the following steps:
+
+01. Build the image:
+
+    ```bash
+    docker build . -f docker/Dockerfile -t cesarbr/knot-babeltower
+    ```
+
+01. Create a file containing the configuration as environment variables.
+
+01. Run the container:
+
+    ```bash
+    docker run --env-file knot-babeltower.env -ti cesarbr/knot-babeltower
+    ```
+
+#### Development
+
+A development container is specified at `docker/Dockerfile-dev`. To use it, execute the following steps:
+
+01. Build the image:
+
+    ```bash
+    docker build . -f docker/Dockerfile-dev -t cesarbr/knot-babeltower:dev
+    ```
+
+01. Create a file containing the configuration as environment variables.
+
+01. Run the container:
+
+    ```bash
+    docker run --env-file knot-babeltower.env -p 8080:80 -v `pwd`:/usr/src/app -ti cesarbr/knot-babeltower:dev
+    ```
+
+The first argument to -v must be the root of this repository, so if you are running from another folder, replace `pwd` with the corresponding path.
+
+This will start the server with auto-reload.
+
+## Verify service health
+
+### Verify
 ```bash
 curl http://<hostname>:<port>/healthcheck
 ```
