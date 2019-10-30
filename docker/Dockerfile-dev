@@ -1,0 +1,11 @@
+FROM golang:1.14-alpine
+
+WORKDIR /usr/src/app
+COPY . .
+
+RUN apk add --update make
+RUN go get github.com/cespare/reflex
+RUN go mod download
+
+ENV "ENV" "development"
+CMD [ "make", "watch"]
