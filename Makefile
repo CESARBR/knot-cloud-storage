@@ -19,6 +19,8 @@ tools:
 	go get github.com/matm/gocov-html
 	go get github.com/ahmetb/govvv
 	go get github.com/mitchellh/gox
+	pip install pre-commit
+	pre-commit install
 
 .PHONY: run
 run: bin
