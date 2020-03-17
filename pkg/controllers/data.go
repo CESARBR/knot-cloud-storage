@@ -39,9 +39,11 @@ func (d *DataController) respondWithJSON(w http.ResponseWriter, code int, payloa
 	response, _ := json.Marshal(payload)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
-	_, err := w.Write(response)
-	if err != nil {
-		d.logger.Error(err)
+	if payload != nil {
+		_, err := w.Write(response)
+		if err != nil {
+			d.logger.Error(err)
+		}
 	}
 }
 
@@ -98,6 +100,29 @@ func (d *DataController) Save(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 	d.respondWithJSON(w, http.StatusCreated, thing)
+}
+
+func (d *DataController) DeleteByDeviceID(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	deviceId := params["deviceId"]
+
+	err := d.DataInteractor.Delete(deviceId)
+	if err != nil {
+		d.respondWithError(w, http.StatusUnprocessableEntity, "Invalid information")
+		return
+	}
+
+	d.respondWithJSON(w, http.StatusOK, nil)
+}
+
+func (d *DataController) DeleteAll(w http.ResponseWriter, r *http.Request) {
+	err := d.DataInteractor.Delete("")
+	if err != nil {
+		d.respondWithError(w, http.StatusUnprocessableEntity, "Invalid information")
+		return
+	}
+
+	d.respondWithJSON(w, http.StatusOK, nil)
 }
 
 func getURLQueryParams(r *http.Request) (query *entities.Query, errorStatus errorMessage) {
