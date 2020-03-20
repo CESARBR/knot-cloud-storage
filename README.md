@@ -1,6 +1,6 @@
 # knot-cloud-storage
 
-A web server that receives messages forwarded by devices and stores them in a database. This service is currently being rewritten in golang to become suitable for running on constrained boards. The legacy instructions can be seen [here](LEGACY.md).
+A web server that receives messages forwarded by devices and stores them in a database. This service is currently being rewritten in golang to become suitable for running on constrained boards. The legacy instructions can be seen [here](legacy/LEGACY.md).
 
 ## Installation and usage
 
