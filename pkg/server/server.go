@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/CESARBR/knot-cloud-storage/pkg/controllers"
 	"github.com/CESARBR/knot-cloud-storage/pkg/logging"
 
 	"github.com/gorilla/mux"
@@ -17,13 +18,14 @@ type Health struct {
 
 // Server represents the HTTP server
 type Server struct {
-	port   int
-	logger logging.Logger
+	port           int
+	logger         logging.Logger
+	DataController controllers.DataController
 }
 
 // NewServer creates a new server instance
-func NewServer(port int, logger logging.Logger) Server {
-	return Server{port: port, logger: logger}
+func NewServer(port int, logger logging.Logger, dataController *controllers.DataController) Server {
+	return Server{port: port, logger: logger, DataController: *dataController}
 }
 
 // Start starts the http server
@@ -37,8 +39,13 @@ func (s *Server) Start() {
 }
 
 func (s *Server) createRouters() *mux.Router {
-	r := mux.NewRouter()
+	r := mux.NewRouter().StrictSlash(true)
+
+	r.HandleFunc("/data/{deviceId}", s.DataController.GetAll).Methods("GET")
+	r.HandleFunc("/data/{deviceId}/sensor/{id}", s.DataController.GetByID).Methods("GET")
+	r.HandleFunc("/data", s.DataController.Save).Methods("POST")
 	r.HandleFunc("/healthcheck", s.healthcheckHandler)
+
 	return r
 }
 
