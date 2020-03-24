@@ -1,13 +1,8 @@
 # First stage: build the application
 FROM golang:1.14-alpine AS builder
+
 ARG GOARCH
 ARG GOARM
-
-# Set the Current Working Directory inside the container
-WORKDIR /go/src/github.com/CESARBR/knot-cloud-storage
-
-# Copy the source code from the current directory to $WORKDIR (inside the container)
-COPY . .
 
 # Install build utilities
 RUN apk --no-cache add --virtual .build-deps \
@@ -20,9 +15,14 @@ RUN apk --no-cache add \
     ca-certificates \
     && update-ca-certificates
 
+# Set the Current Working Directory inside the container
+WORKDIR /go/src/github.com/CESARBR/knot-cloud-storage
+
+# Copy the source code from the current directory to $WORKDIR (inside the container)
+COPY . .
+
 # Install project development tools and dependencies
 RUN go get github.com/ahmetb/govvv
-RUN make deps
 
 # Build the application
 RUN make bin
@@ -32,6 +32,7 @@ RUN apk del .build-deps
 
 # Second stage: create the entrypoint to the application binary generated in the previous stage
 FROM scratch
+
 WORKDIR /root/
 
 # Copy the configuration files from the build stage

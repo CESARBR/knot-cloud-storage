@@ -53,8 +53,4 @@ clean:
 	$(GOCLEAN)
 	@rm -f ${BINARY}-$(OS)-${GOARCH}
 	@rm -f coverage.out
-
-.PHONY: deps
-deps:
-	go mod download
-	go mod vendor
+	@rm -rf vendor
