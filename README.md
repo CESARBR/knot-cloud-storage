@@ -64,7 +64,7 @@ A development container is specified at `docker/Dockerfile-dev`. To use it, exec
 01. Build the image:
 
     ```bash
-    docker build . -f docker/Dockerfile-dev -t cesarbr/knot-cloud-storage:dev
+    docker build . -f docker/Dockerfile-dev -t cesarbr/knot-cloud-storage-go:dev
     ```
 
 01. Create a file containing the configuration as environment variables.
@@ -72,7 +72,7 @@ A development container is specified at `docker/Dockerfile-dev`. To use it, exec
 01. Run the container:
 
     ```bash
-    docker run --env-file knot-cloud-storage.env -p 8080:80 -v `pwd`:/usr/src/app -ti cesarbr/knot-cloud-storage:dev
+    docker run --env-file knot-cloud-storage.env -p 8080:80 -v `pwd`:/usr/src/app -ti cesarbr/knot-cloud-storage-go:dev
     ```
 
 The first argument to -v must be the root of this repository, so if you are running from another folder, replace `pwd` with the corresponding path.
