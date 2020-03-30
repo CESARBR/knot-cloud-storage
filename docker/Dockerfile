@@ -4,7 +4,7 @@ ARG GOARCH
 ARG GOARM
 
 # Set the Current Working Directory inside the container
-WORKDIR /go/src/github.com/CESARBR/knot-babeltower
+WORKDIR /go/src/github.com/CESARBR/knot-cloud-storage
 
 # Copy the source code from the current directory to $WORKDIR (inside the container)
 COPY . .
@@ -35,12 +35,12 @@ FROM scratch
 WORKDIR /root/
 
 # Copy the configuration files from the build stage
-COPY --from=builder /go/src/github.com/CESARBR/knot-babeltower/internal/ ./internal
+COPY --from=builder /go/src/github.com/CESARBR/knot-cloud-storage/internal/ ./internal
 
 # Copy SSL CA certificates
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 # Copy the binary file from the build stage
-COPY --from=builder /go/src/github.com/CESARBR/knot-babeltower/app-linux-amd64 app
+COPY --from=builder /go/src/github.com/CESARBR/knot-cloud-storage/app-linux-amd64 app
 
 ENTRYPOINT ["./app"]

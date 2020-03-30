@@ -11,7 +11,7 @@ func main() {
 	logrus := logging.NewLogrus(config.Logger.Level)
 
 	logger := logrus.Get("Main")
-	logger.Info("Starting KNoT Babeltower")
+	logger.Info("Starting KNoT Cloud Storage")
 
 	server := server.NewServer(config.Server.Port, logrus.Get("Server"))
 	server.Start()
