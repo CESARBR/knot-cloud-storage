@@ -46,7 +46,7 @@ A container is specified at `docker/Dockerfile`. To use it, execute the followin
 01. Build the image:
 
     ```bash
-    docker build . -f docker/Dockerfile -t cesarbr/knot-babeltower
+    docker build . -f docker/Dockerfile -t cesarbr/knot-cloud-storage
     ```
 
 01. Create a file containing the configuration as environment variables.
@@ -54,7 +54,7 @@ A container is specified at `docker/Dockerfile`. To use it, execute the followin
 01. Run the container:
 
     ```bash
-    docker run --env-file knot-babeltower.env -ti cesarbr/knot-babeltower
+    docker run --env-file knot-cloud-storage.env -ti cesarbr/knot-cloud-storage
     ```
 
 #### Development
@@ -64,7 +64,7 @@ A development container is specified at `docker/Dockerfile-dev`. To use it, exec
 01. Build the image:
 
     ```bash
-    docker build . -f docker/Dockerfile-dev -t cesarbr/knot-babeltower:dev
+    docker build . -f docker/Dockerfile-dev -t cesarbr/knot-cloud-storage:dev
     ```
 
 01. Create a file containing the configuration as environment variables.
@@ -72,7 +72,7 @@ A development container is specified at `docker/Dockerfile-dev`. To use it, exec
 01. Run the container:
 
     ```bash
-    docker run --env-file knot-babeltower.env -p 8080:80 -v `pwd`:/usr/src/app -ti cesarbr/knot-babeltower:dev
+    docker run --env-file knot-cloud-storage.env -p 8080:80 -v `pwd`:/usr/src/app -ti cesarbr/knot-cloud-storage:dev
     ```
 
 The first argument to -v must be the root of this repository, so if you are running from another folder, replace `pwd` with the corresponding path.
