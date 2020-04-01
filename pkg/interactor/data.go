@@ -24,7 +24,13 @@ func NewDataInteractor(dataStore *data.DataStore, logger logging.Logger) *DataIn
 	return &DataInteractor{dataStore, logger}
 }
 
-func (d *DataInteractor) GetAll(order, skip, take int, startDate, finishDate time.Time) ([]Data, error) {
+// GetAll retrieves all the data present in the storage
+func (d *DataInteractor) GetAll(token string, order, skip, take int, startDate, finishDate time.Time) ([]Data, error) {
+	err := d.Authenticate(token)
+	if err != nil {
+		return nil, err
+	}
+
 	selectOrder := "timestamp"
 	if order == -1 {
 		selectOrder = "-timestamp"
@@ -37,7 +43,13 @@ func (d *DataInteractor) GetAll(order, skip, take int, startDate, finishDate tim
 	return data, err
 }
 
-func (d *DataInteractor) GetByID(id string, order, skip, take int, startDate, finishDate time.Time) ([]Data, error) {
+// GetByID retrieves data by it's ID from the storage, if present
+func (d *DataInteractor) GetByID(token, id string, order, skip, take int, startDate, finishDate time.Time) ([]Data, error) {
+	err := d.Authenticate(token)
+	if err != nil {
+		return nil, err
+	}
+
 	selectOrder := "timestamp"
 	if order == -1 {
 		selectOrder = "-timestamp"
@@ -54,9 +66,15 @@ func (d *DataInteractor) GetByID(id string, order, skip, take int, startDate, fi
 	return data, err
 }
 
-func (d *DataInteractor) Save(id string, data []entities.Payload, timestamp time.Time) error {
+// Save inserts data to the storage, if it doesn't exist already
+func (d *DataInteractor) Save(token, id string, data []entities.Payload, timestamp time.Time) error {
+	err := d.Authenticate(token)
+	if err != nil {
+		return err
+	}
+
 	for _, dt := range data {
-		err := d.DataStore.Save(Data{From: id, Payload: dt, Timestamp: timestamp})
+		err = d.DataStore.Save(Data{From: id, Payload: dt, Timestamp: timestamp})
 		if err != nil {
 			return fmt.Errorf("error saving data %v: %w", data, err)
 		}
