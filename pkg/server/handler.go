@@ -75,17 +75,17 @@ func (h *Handler) onMsgReceived(msgChan chan network.InMsg) {
 func (h *Handler) handleMessages(msg network.InMsg) error {
 	switch msg.RoutingKey {
 	case "data.publish":
-		return h.handlePublishData(msg.Body)
+		return h.handlePublishData(msg.Headers["Authorization"].(string), msg.Body)
 	}
 	return nil
 }
 
-func (h *Handler) handlePublishData(body []byte) error {
+func (h *Handler) handlePublishData(token string, body []byte) error {
 	msg := network.DataPublish{}
 	err := json.Unmarshal(body, &msg)
 	if err != nil {
 		return fmt.Errorf("message body parsing error: %w", err)
 	}
 
-	return h.dataInteractor.Save(msg.ID, msg.Data, time.Now())
+	return h.dataInteractor.Save(token, msg.ID, msg.Data, time.Now())
 }
