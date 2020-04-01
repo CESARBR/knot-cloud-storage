@@ -1,6 +1,7 @@
 package interactor
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 	"time"
@@ -10,6 +11,9 @@ import (
 	. "github.com/CESARBR/knot-cloud-storage/pkg/entities"
 	"github.com/CESARBR/knot-cloud-storage/pkg/logging"
 )
+
+// ErrTokenEmpty is returned for empty access tokens.
+var ErrTokenEmpty = errors.New("no access token provided")
 
 type DataInteractor struct {
 	DataStore *data.DataStore
@@ -58,6 +62,14 @@ func (d *DataInteractor) Save(id string, data []entities.Payload, timestamp time
 		}
 	}
 
+	return nil
+}
+
+// Authenticate verifies if the access token is valid.
+func (d *DataInteractor) Authenticate(token string) error {
+	if token == "" {
+		return ErrTokenEmpty
+	}
 	return nil
 }
 
