@@ -10,8 +10,7 @@ import (
 	"github.com/CESARBR/knot-cloud-storage/pkg/logging"
 	"github.com/CESARBR/knot-cloud-storage/pkg/network"
 	"github.com/CESARBR/knot-cloud-storage/pkg/server"
-
-	"os"
+	"github.com/CESARBR/knot-cloud-storage/pkg/users"
 )
 
 func main() {
@@ -33,8 +32,9 @@ func main() {
 	amqpStartChan := make(chan bool, 1)
 	amqp := network.NewAmqp(config.RabbitMQ.URL, logrus.Get("AMQP"))
 
+	usersService := users.New(config.Users.Host, config.Users.Port, logger)
 	dataStore := data.NewDataStore(database, logrus.Get("Storage"))
-	dataInteractor := interactor.NewDataInteractor(dataStore, logrus.Get("Interactor"))
+	dataInteractor := interactor.NewDataInteractor(usersService, dataStore, logrus.Get("Interactor"))
 	dataController := controllers.NewDataController(dataInteractor, logrus.Get("Controller"))
 
 	handlerStartChan := make(chan bool, 1)
