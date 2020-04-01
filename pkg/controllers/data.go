@@ -15,6 +15,7 @@ import (
 
 const maxItemsAllowedToRequest = 100
 
+// DataController handles data operations in the storage.
 type DataController struct {
 	DataInteractor *interactor.DataInteractor
 	logger         logging.Logger
@@ -25,6 +26,7 @@ type errorMessage struct {
 	message string
 }
 
+// NewDataController constructs the DataController.
 func NewDataController(dataInteractor *interactor.DataInteractor, logger logging.Logger) *DataController {
 	return &DataController{dataInteractor, logger}
 }
@@ -43,6 +45,7 @@ func (d *DataController) respondWithJson(w http.ResponseWriter, code int, payloa
 	}
 }
 
+// GetAll handles incoming data listing requests.
 func (d *DataController) GetAll(w http.ResponseWriter, r *http.Request) {
 	order, skip, take, startDate, finishDate, errUrl := getUrlQueryParams(r)
 	if errUrl.error {
@@ -50,7 +53,8 @@ func (d *DataController) GetAll(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	things, err := d.DataInteractor.GetAll(order, skip, take, startDate, finishDate)
+	token := r.Header.Get("auth_token")
+	things, err := d.DataInteractor.GetAll(token, order, skip, take, startDate, finishDate)
 	if err != nil {
 		d.respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
@@ -58,6 +62,7 @@ func (d *DataController) GetAll(w http.ResponseWriter, r *http.Request) {
 	d.respondWithJson(w, http.StatusOK, things)
 }
 
+// GetByID handles incmoning data retrievel by id requests.
 func (d *DataController) GetByID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	order, skip, take, startDate, finishDate, errUrl := getUrlQueryParams(r)
@@ -65,7 +70,9 @@ func (d *DataController) GetByID(w http.ResponseWriter, r *http.Request) {
 		d.respondWithError(w, http.StatusUnprocessableEntity, errUrl.message)
 		return
 	}
-	thing, err := d.DataInteractor.GetByID(params["id"], order, skip, take, startDate, finishDate)
+
+	token := r.Header.Get("auth_token")
+	thing, err := d.DataInteractor.GetByID(token, params["id"], order, skip, take, startDate, finishDate)
 	if err != nil {
 		d.respondWithError(w, http.StatusBadRequest, "Invalid Thing ID")
 		return
@@ -73,6 +80,7 @@ func (d *DataController) GetByID(w http.ResponseWriter, r *http.Request) {
 	d.respondWithJson(w, http.StatusOK, thing)
 }
 
+// Save handles incoming data insertion requests.
 func (d *DataController) Save(w http.ResponseWriter, r *http.Request) {
 	var thing Data
 	if err := json.NewDecoder(r.Body).Decode(&thing); err != nil {
@@ -80,8 +88,9 @@ func (d *DataController) Save(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	token := r.Header.Get("auth_token")
 	data := []entities.Payload{thing.Payload}
-	if err := d.DataInteractor.Save(thing.From, data, time.Now()); err != nil {
+	if err := d.DataInteractor.Save(token, thing.From, data, time.Now()); err != nil {
 		d.respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
