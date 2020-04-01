@@ -10,18 +10,22 @@ import (
 	"github.com/CESARBR/knot-cloud-storage/pkg/entities"
 	. "github.com/CESARBR/knot-cloud-storage/pkg/entities"
 	"github.com/CESARBR/knot-cloud-storage/pkg/logging"
+	"github.com/CESARBR/knot-cloud-storage/pkg/users"
 )
 
 // ErrTokenEmpty is returned for empty access tokens.
 var ErrTokenEmpty = errors.New("no access token provided")
 
+// DataInteractor represents the data layer interactor structure
 type DataInteractor struct {
-	DataStore *data.DataStore
-	logger    logging.Logger
+	UsersService users.Authenticator
+	DataStore    *data.DataStore
+	logger       logging.Logger
 }
 
-func NewDataInteractor(dataStore *data.DataStore, logger logging.Logger) *DataInteractor {
-	return &DataInteractor{dataStore, logger}
+// NewDataInteractor creates a new data interactor instance
+func NewDataInteractor(usersService users.Authenticator, dataStore *data.DataStore, logger logging.Logger) *DataInteractor {
+	return &DataInteractor{usersService, dataStore, logger}
 }
 
 // GetAll retrieves all the data present in the storage
@@ -87,6 +91,10 @@ func (d *DataInteractor) Save(token, id string, data []entities.Payload, timesta
 func (d *DataInteractor) Authenticate(token string) error {
 	if token == "" {
 		return ErrTokenEmpty
+	}
+	err := d.UsersService.Authenticate(token)
+	if err != nil {
+		return err
 	}
 	return nil
 }
