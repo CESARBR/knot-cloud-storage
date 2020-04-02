@@ -1,7 +1,7 @@
 package data
 
 import (
-	"gopkg.in/mgo.v2"
+	"github.com/globalsign/mgo"
 )
 
 type MongoDB struct {
