@@ -1,6 +1,8 @@
 package entities
 
-import "time"
+import (
+	"time"
+)
 
 type Data struct {
 	From      string    `bson:"from" json:"from"`
@@ -9,6 +11,6 @@ type Data struct {
 }
 
 type Payload struct {
-	SensorId int `bson:"sensor_id" json:"sensor_id"`
-	Value    int `bson:"value" json:"value"`
+	SensorId int         `bson:"sensor_id" json:"sensor_id"`
+	Value    interface{} `bson:"value" json:"value"`
 }
