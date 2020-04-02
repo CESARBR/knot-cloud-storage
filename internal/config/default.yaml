@@ -1,5 +1,9 @@
 server:
   port: 80
 
+MongoDB:
+  host: localhost
+  name: things_db
+
 logger:
   level: info
