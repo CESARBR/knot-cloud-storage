@@ -2,8 +2,11 @@ server:
   port: 80
 
 MongoDB:
-  host: localhost
+  host: mongodb://mongo
   name: things_db
+
+rabbitmq:
+  url: amqp://knot:knot@rabbitmq
 
 logger:
   level: info
