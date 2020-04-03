@@ -18,6 +18,11 @@ type Logger struct {
 	Level string
 }
 
+// RabbitMQ represents the rabbitmq configuration properties
+type RabbitMQ struct {
+	URL string
+}
+
 // MongoDB represents the database configuration properties
 type MongoDB struct {
 	Host string
@@ -29,6 +34,7 @@ type MongoDB struct {
 type Config struct {
 	Server
 	Logger
+	RabbitMQ
 	MongoDB
 }
 
