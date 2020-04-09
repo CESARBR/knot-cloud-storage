@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/CESARBR/knot-cloud-storage/pkg/entities"
 	"github.com/CESARBR/knot-cloud-storage/pkg/interactor"
 	"github.com/CESARBR/knot-cloud-storage/pkg/logging"
 	"github.com/CESARBR/knot-cloud-storage/pkg/network"
@@ -88,14 +87,5 @@ func (h *Handler) handlePublishData(body []byte) error {
 		return fmt.Errorf("message body parsing error: %w", err)
 	}
 
-	timestamp := time.Now()
-
-	for _, data := range msg.Data {
-		err = h.dataInteractor.Save(entities.Data{From: msg.ID, Payload: data, Timestamp: timestamp})
-		if err != nil {
-			return fmt.Errorf("error saving data: %w", err)
-		}
-	}
-
-	return nil
+	return h.dataInteractor.Save(msg.ID, msg.Data, time.Now())
 }
