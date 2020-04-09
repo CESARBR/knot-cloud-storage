@@ -8,6 +8,7 @@ import (
 
 	. "github.com/CESARBR/knot-cloud-storage/pkg/entities"
 	"github.com/CESARBR/knot-cloud-storage/pkg/interactor"
+	"github.com/CESARBR/knot-cloud-storage/pkg/logging"
 	"github.com/gorilla/mux"
 )
 
@@ -15,6 +16,7 @@ const maxItemsAllowedToRequest = 100
 
 type DataController struct {
 	DataInteractor *interactor.DataInteractor
+	logger         logging.Logger
 }
 
 type errorMessage struct {
@@ -22,71 +24,72 @@ type errorMessage struct {
 	message string
 }
 
-func NewDataController(dataInteractor *interactor.DataInteractor) *DataController {
-	return &DataController{dataInteractor}
+func NewDataController(dataInteractor *interactor.DataInteractor, logger logging.Logger) *DataController {
+	return &DataController{dataInteractor, logger}
 }
 
-func respondWithError(w http.ResponseWriter, code int, msg string) {
-	respondWithJson(w, code, map[string]string{"message": msg})
+func (d *DataController) respondWithError(w http.ResponseWriter, code int, msg string) {
+	d.respondWithJson(w, code, map[string]string{"message": msg})
 }
 
-func respondWithJson(w http.ResponseWriter, code int, payload interface{}) {
+func (d *DataController) respondWithJson(w http.ResponseWriter, code int, payload interface{}) {
 	response, _ := json.Marshal(payload)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
-	w.Write(response)
+	_, err := w.Write(response)
+	if err != nil {
+		d.logger.Error(err)
+	}
 }
 
 func (d *DataController) GetAll(w http.ResponseWriter, r *http.Request) {
-
 	order, skip, take, startDate, finishDate, errUrl := getUrlQueryParams(r)
-	if errUrl.error != false {
-		respondWithError(w, http.StatusUnprocessableEntity, errUrl.message)
+	if errUrl.error {
+		d.respondWithError(w, http.StatusUnprocessableEntity, errUrl.message)
 		return
 	}
 
 	things, err := d.DataInteractor.GetAll(order, skip, take, startDate, finishDate)
 	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, err.Error())
+		d.respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	respondWithJson(w, http.StatusOK, things)
+	d.respondWithJson(w, http.StatusOK, things)
 }
 
 func (d *DataController) GetByID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	order, skip, take, startDate, finishDate, errUrl := getUrlQueryParams(r)
-	if errUrl.error != false {
-		respondWithError(w, http.StatusUnprocessableEntity, errUrl.message)
+	if errUrl.error {
+		d.respondWithError(w, http.StatusUnprocessableEntity, errUrl.message)
 		return
 	}
 	thing, err := d.DataInteractor.GetByID(params["id"], order, skip, take, startDate, finishDate)
 	if err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid Thing ID")
+		d.respondWithError(w, http.StatusBadRequest, "Invalid Thing ID")
 		return
 	}
-	respondWithJson(w, http.StatusOK, thing)
+	d.respondWithJson(w, http.StatusOK, thing)
 }
 
 func (d *DataController) Save(w http.ResponseWriter, r *http.Request) {
 	var thing Data
 	if err := json.NewDecoder(r.Body).Decode(&thing); err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		d.respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
 
 	thing.Timestamp = time.Now()
 	if err := d.DataInteractor.Save(thing); err != nil {
-		respondWithError(w, http.StatusInternalServerError, err.Error())
+		d.respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	respondWithJson(w, http.StatusCreated, thing)
 	defer r.Body.Close()
-
+	d.respondWithJson(w, http.StatusCreated, thing)
 }
 
 func getUrlQueryParams(r *http.Request) (order, skip, take int, startDate, finishDate time.Time, errorStatus errorMessage) {
-	var err error = nil
+	var err error
 	order = 1
 	skip = 0
 	take = 10

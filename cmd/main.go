@@ -24,7 +24,7 @@ func main() {
 
 	dataStore := data.NewDataStore(database, logrus.Get("Storage"))
 	dataInteractor := interactor.NewDataInteractor(dataStore, logrus.Get("Interactor"))
-	dataController := controllers.NewDataController(dataInteractor)
+	dataController := controllers.NewDataController(dataInteractor, logrus.Get("Controller"))
 
 	server := server.NewServer(config.Server.Port, logrus.Get("Server"), dataController)
 	server.Start()
