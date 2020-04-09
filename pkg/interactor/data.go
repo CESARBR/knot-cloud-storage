@@ -1,10 +1,12 @@
 package interactor
 
 import (
+	"fmt"
 	"strconv"
 	"time"
 
 	"github.com/CESARBR/knot-cloud-storage/pkg/data"
+	"github.com/CESARBR/knot-cloud-storage/pkg/entities"
 	. "github.com/CESARBR/knot-cloud-storage/pkg/entities"
 	"github.com/CESARBR/knot-cloud-storage/pkg/logging"
 )
@@ -48,12 +50,15 @@ func (d *DataInteractor) GetByID(id string, order, skip, take int, startDate, fi
 	return data, err
 }
 
-func (d *DataInteractor) Save(data Data) error {
-	err := d.DataStore.Save(data)
-	if err != nil {
-		d.logger.Error(err)
+func (d *DataInteractor) Save(id string, data []entities.Payload, timestamp time.Time) error {
+	for _, dt := range data {
+		err := d.DataStore.Save(Data{From: id, Payload: dt, Timestamp: timestamp})
+		if err != nil {
+			return fmt.Errorf("error saving data %v: %w", data, err)
+		}
 	}
-	return err
+
+	return nil
 }
 
 func filterDataBySensorID(data []Data, sensorId int) []Data {

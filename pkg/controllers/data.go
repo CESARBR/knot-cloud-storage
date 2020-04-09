@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/CESARBR/knot-cloud-storage/pkg/entities"
 	. "github.com/CESARBR/knot-cloud-storage/pkg/entities"
 	"github.com/CESARBR/knot-cloud-storage/pkg/interactor"
 	"github.com/CESARBR/knot-cloud-storage/pkg/logging"
@@ -79,8 +80,8 @@ func (d *DataController) Save(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	thing.Timestamp = time.Now()
-	if err := d.DataInteractor.Save(thing); err != nil {
+	data := []entities.Payload{thing.Payload}
+	if err := d.DataInteractor.Save(thing.From, data, time.Now()); err != nil {
 		d.respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
