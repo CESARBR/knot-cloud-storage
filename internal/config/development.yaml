@@ -5,6 +5,10 @@ MongoDB:
   host: mongodb://mongo
   name: things_db
 
+Users:
+  host: localhost
+  port: 8080
+
 rabbitmq:
   url: amqp://knot:knot@rabbitmq
 
