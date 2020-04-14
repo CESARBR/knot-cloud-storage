@@ -10,6 +10,8 @@ import (
 	"github.com/CESARBR/knot-cloud-storage/pkg/logging"
 	"github.com/CESARBR/knot-cloud-storage/pkg/network"
 	"github.com/CESARBR/knot-cloud-storage/pkg/server"
+
+	"os"
 )
 
 func main() {
@@ -24,7 +26,8 @@ func main() {
 	mongo := data.NewMongoDB(config.MongoDB.Host, config.MongoDB.Name)
 	database, err := mongo.Connect()
 	if err != nil {
-		logger.Error(err)
+		logger.Error("Failed to connect with the database: ", err)
+		os.Exit(1)
 	}
 
 	amqpStartChan := make(chan bool, 1)
