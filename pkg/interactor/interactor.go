@@ -18,12 +18,12 @@ type Interactor interface {
 // DataInteractor represents the data layer interactor structure
 type DataInteractor struct {
 	UsersService users.Authenticator
-	DataStore    *data.DataStore
+	DataStore    *data.Store
 	logger       logging.Logger
 }
 
 // NewDataInteractor creates a new data interactor instance
-func NewDataInteractor(users users.Authenticator, dataStore *data.DataStore, logger logging.Logger) Interactor {
+func NewDataInteractor(users users.Authenticator, dataStore *data.Store, logger logging.Logger) Interactor {
 	return &DataInteractor{users, dataStore, logger}
 }
 

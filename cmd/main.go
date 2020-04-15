@@ -33,7 +33,7 @@ func main() {
 	amqp := network.NewAmqp(config.RabbitMQ.URL, logrus.Get("AMQP"))
 
 	usersService := users.New(config.Users.Host, config.Users.Port, logger)
-	dataStore := data.NewDataStore(database, logrus.Get("Storage"))
+	dataStore := data.NewStore(database, logrus.Get("Storage"))
 	dataInteractor := interactor.NewDataInteractor(usersService, dataStore, logrus.Get("Interactor"))
 	dataController := controllers.NewDataController(dataInteractor, logrus.Get("Controller"))
 

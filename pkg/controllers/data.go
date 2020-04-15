@@ -17,7 +17,8 @@ const maxItemsAllowedToRequest = 100
 // DataController handles data operations in the storage.
 type DataController struct {
 	DataInteractor interactor.Interactor
-	logger         logging.Logger
+
+	logger logging.Logger
 }
 
 type errorMessage struct {
@@ -31,10 +32,10 @@ func NewDataController(dataInteractor interactor.Interactor, logger logging.Logg
 }
 
 func (d *DataController) respondWithError(w http.ResponseWriter, code int, msg string) {
-	d.respondWithJson(w, code, map[string]string{"message": msg})
+	d.respondWithJSON(w, code, map[string]string{"message": msg})
 }
 
-func (d *DataController) respondWithJson(w http.ResponseWriter, code int, payload interface{}) {
+func (d *DataController) respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	response, _ := json.Marshal(payload)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
@@ -46,9 +47,9 @@ func (d *DataController) respondWithJson(w http.ResponseWriter, code int, payloa
 
 // GetAll handles incoming data listing requests.
 func (d *DataController) GetAll(w http.ResponseWriter, r *http.Request) {
-	query, errUrl := getURLQueryParams(r)
-	if errUrl.error {
-		d.respondWithError(w, http.StatusUnprocessableEntity, errUrl.message)
+	query, errURL := getURLQueryParams(r)
+	if errURL.error {
+		d.respondWithError(w, http.StatusUnprocessableEntity, errURL.message)
 		return
 	}
 
@@ -58,17 +59,17 @@ func (d *DataController) GetAll(w http.ResponseWriter, r *http.Request) {
 		d.respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	d.respondWithJson(w, http.StatusOK, things)
+	d.respondWithJSON(w, http.StatusOK, things)
 }
 
 // GetByID handles incmoning data retrievel by id requests.
 func (d *DataController) GetByID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	query, errUrl := getURLQueryParams(r)
+	query, errURL := getURLQueryParams(r)
 	query.SensorID = params["id"]
 
-	if errUrl.error {
-		d.respondWithError(w, http.StatusUnprocessableEntity, errUrl.message)
+	if errURL.error {
+		d.respondWithError(w, http.StatusUnprocessableEntity, errURL.message)
 		return
 	}
 
@@ -78,7 +79,7 @@ func (d *DataController) GetByID(w http.ResponseWriter, r *http.Request) {
 		d.respondWithError(w, http.StatusBadRequest, "Invalid Thing ID")
 		return
 	}
-	d.respondWithJson(w, http.StatusOK, thing)
+	d.respondWithJSON(w, http.StatusOK, thing)
 }
 
 // Save handles incoming data insertion requests.
@@ -96,7 +97,7 @@ func (d *DataController) Save(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer r.Body.Close()
-	d.respondWithJson(w, http.StatusCreated, thing)
+	d.respondWithJSON(w, http.StatusCreated, thing)
 }
 
 func getURLQueryParams(r *http.Request) (query *entities.Query, errorStatus errorMessage) {
