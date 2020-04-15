@@ -26,3 +26,12 @@ type DataInteractor struct {
 func NewDataInteractor(users users.Authenticator, dataStore *data.DataStore, logger logging.Logger) *DataInteractor {
 	return &DataInteractor{users, dataStore, logger}
 }
+
+// Authenticate verifies if the access token is valid.
+func (d *DataInteractor) Authenticate(token string) error {
+	err := d.UsersService.Authenticate(token)
+	if err != nil {
+		return err
+	}
+	return nil
+}
