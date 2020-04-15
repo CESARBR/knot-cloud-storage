@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/CESARBR/knot-cloud-storage/pkg/entities"
-	. "github.com/CESARBR/knot-cloud-storage/pkg/entities"
 	"github.com/CESARBR/knot-cloud-storage/pkg/interactor"
 	"github.com/CESARBR/knot-cloud-storage/pkg/logging"
 	"github.com/gorilla/mux"
@@ -47,14 +46,14 @@ func (d *DataController) respondWithJson(w http.ResponseWriter, code int, payloa
 
 // GetAll handles incoming data listing requests.
 func (d *DataController) GetAll(w http.ResponseWriter, r *http.Request) {
-	order, skip, take, startDate, finishDate, errUrl := getUrlQueryParams(r)
+	query, errUrl := getURLQueryParams(r)
 	if errUrl.error {
 		d.respondWithError(w, http.StatusUnprocessableEntity, errUrl.message)
 		return
 	}
 
 	token := r.Header.Get("auth_token")
-	things, err := d.DataInteractor.GetAll(token, order, skip, take, startDate, finishDate)
+	things, err := d.DataInteractor.GetAll(token, query)
 	if err != nil {
 		d.respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
@@ -65,14 +64,16 @@ func (d *DataController) GetAll(w http.ResponseWriter, r *http.Request) {
 // GetByID handles incmoning data retrievel by id requests.
 func (d *DataController) GetByID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	order, skip, take, startDate, finishDate, errUrl := getUrlQueryParams(r)
+	query, errUrl := getURLQueryParams(r)
+	query.SensorID = params["id"]
+
 	if errUrl.error {
 		d.respondWithError(w, http.StatusUnprocessableEntity, errUrl.message)
 		return
 	}
 
 	token := r.Header.Get("auth_token")
-	thing, err := d.DataInteractor.GetByID(token, params["id"], order, skip, take, startDate, finishDate)
+	thing, err := d.DataInteractor.GetByID(token, query)
 	if err != nil {
 		d.respondWithError(w, http.StatusBadRequest, "Invalid Thing ID")
 		return
@@ -82,7 +83,7 @@ func (d *DataController) GetByID(w http.ResponseWriter, r *http.Request) {
 
 // Save handles incoming data insertion requests.
 func (d *DataController) Save(w http.ResponseWriter, r *http.Request) {
-	var thing Data
+	var thing entities.Data
 	if err := json.NewDecoder(r.Body).Decode(&thing); err != nil {
 		d.respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
@@ -98,14 +99,14 @@ func (d *DataController) Save(w http.ResponseWriter, r *http.Request) {
 	d.respondWithJson(w, http.StatusCreated, thing)
 }
 
-func getUrlQueryParams(r *http.Request) (order, skip, take int, startDate, finishDate time.Time, errorStatus errorMessage) {
+func getURLQueryParams(r *http.Request) (query *entities.Query, errorStatus errorMessage) {
 	var err error
-	order = 1
-	skip = 0
-	take = 10
-	startDate, err = time.Parse("2006-1-02", "2006-1-02")
+	order := 1
+	skip := 0
+	take := 10
+	startDate, err := time.Parse("2006-1-02", "2006-1-02")
 	errorStatus = checkError(err, "error when trying to parse time")
-	finishDate = time.Now()
+	finishDate := time.Now()
 
 	for k, v := range r.URL.Query() {
 		switch k {
@@ -130,7 +131,13 @@ func getUrlQueryParams(r *http.Request) (order, skip, take int, startDate, finis
 		}
 	}
 
-	return order, skip, take, startDate, finishDate, errorStatus
+	return &entities.Query{
+		Order:      order,
+		Skip:       skip,
+		Take:       take,
+		StartDate:  startDate,
+		FinishDate: finishDate,
+	}, errorStatus
 }
 
 func checkError(err error, text string) (errorStatus errorMessage) {
