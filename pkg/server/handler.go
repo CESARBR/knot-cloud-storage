@@ -20,11 +20,11 @@ const (
 type Handler struct {
 	logger         logging.Logger
 	amqp           *network.Amqp
-	dataInteractor *interactor.DataInteractor
+	dataInteractor interactor.Interactor
 }
 
 // NewHandler creates a new Handler instance with the necessary dependencies
-func NewHandler(logger logging.Logger, amqp *network.Amqp, dataInteractor *interactor.DataInteractor) *Handler {
+func NewHandler(logger logging.Logger, amqp *network.Amqp, dataInteractor interactor.Interactor) *Handler {
 	return &Handler{logger, amqp, dataInteractor}
 }
 

@@ -16,7 +16,7 @@ const maxItemsAllowedToRequest = 100
 
 // DataController handles data operations in the storage.
 type DataController struct {
-	DataInteractor *interactor.DataInteractor
+	DataInteractor interactor.Interactor
 	logger         logging.Logger
 }
 
@@ -26,7 +26,7 @@ type errorMessage struct {
 }
 
 // NewDataController constructs the DataController.
-func NewDataController(dataInteractor *interactor.DataInteractor, logger logging.Logger) *DataController {
+func NewDataController(dataInteractor interactor.Interactor, logger logging.Logger) *DataController {
 	return &DataController{dataInteractor, logger}
 }
 
