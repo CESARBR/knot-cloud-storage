@@ -25,18 +25,18 @@ func NewDataInteractor(usersService users.Authenticator, dataStore *data.DataSto
 }
 
 // GetAll retrieves all the data present in the storage
-func (d *DataInteractor) GetAll(token string, order, skip, take int, startDate, finishDate time.Time) ([]Data, error) {
+func (d *DataInteractor) GetAll(token string, query *entities.Query) ([]Data, error) {
 	err := d.Authenticate(token)
 	if err != nil {
 		return nil, err
 	}
 
 	selectOrder := "timestamp"
-	if order == -1 {
+	if query.Order == -1 {
 		selectOrder = "-timestamp"
 	}
 
-	data, err := d.DataStore.Get(selectOrder, skip, take, startDate, finishDate)
+	data, err := d.DataStore.Get(selectOrder, query.Skip, query.Take, query.StartDate, query.FinishDate)
 	if err != nil {
 		d.logger.Error(err)
 	}
@@ -44,24 +44,24 @@ func (d *DataInteractor) GetAll(token string, order, skip, take int, startDate, 
 }
 
 // GetByID retrieves data by it's ID from the storage, if present
-func (d *DataInteractor) GetByID(token, id string, order, skip, take int, startDate, finishDate time.Time) ([]Data, error) {
+func (d *DataInteractor) GetByID(token string, query *entities.Query) ([]Data, error) {
 	err := d.Authenticate(token)
 	if err != nil {
 		return nil, err
 	}
 
 	selectOrder := "timestamp"
-	if order == -1 {
+	if query.Order == -1 {
 		selectOrder = "-timestamp"
 	}
 
-	s, err := strconv.ParseInt(id, 10, 64)
+	s, err := strconv.ParseInt(query.ThingID, 10, 64)
 	if err != nil {
 		d.logger.Errorf("Error when trying to parse ID from string to int")
 		return nil, err
 	}
 
-	data, err := d.DataStore.Get(selectOrder, skip, take, startDate, finishDate)
+	data, err := d.DataStore.Get(selectOrder, query.Skip, query.Take, query.StartDate, query.FinishDate)
 	data = filterDataBySensorID(data, int(s))
 	return data, err
 }
