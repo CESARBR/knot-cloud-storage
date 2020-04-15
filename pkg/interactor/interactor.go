@@ -23,7 +23,7 @@ type DataInteractor struct {
 }
 
 // NewDataInteractor creates a new data interactor instance
-func NewDataInteractor(users users.Authenticator, dataStore *data.DataStore, logger logging.Logger) *DataInteractor {
+func NewDataInteractor(users users.Authenticator, dataStore *data.DataStore, logger logging.Logger) Interactor {
 	return &DataInteractor{users, dataStore, logger}
 }
 
