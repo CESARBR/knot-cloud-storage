@@ -5,3 +5,4 @@
     - id: golangci-lint
     - id: go-imports
     - id: go-unit-tests
+    - id: go-vet
