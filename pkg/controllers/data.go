@@ -53,7 +53,7 @@ func (d *DataController) GetAll(w http.ResponseWriter, r *http.Request) {
 	}
 
 	token := r.Header.Get("auth_token")
-	things, err := d.DataInteractor.GetAll(token, query)
+	things, err := d.DataInteractor.List(token, query)
 	if err != nil {
 		d.respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
@@ -73,7 +73,7 @@ func (d *DataController) GetByID(w http.ResponseWriter, r *http.Request) {
 	}
 
 	token := r.Header.Get("auth_token")
-	thing, err := d.DataInteractor.GetByID(token, query)
+	thing, err := d.DataInteractor.List(token, query)
 	if err != nil {
 		d.respondWithError(w, http.StatusBadRequest, "Invalid Thing ID")
 		return
