@@ -1,9 +1,7 @@
 package interactor
 
 import (
-	"fmt"
 	"strconv"
-	"time"
 
 	"github.com/CESARBR/knot-cloud-storage/pkg/entities"
 )
@@ -48,32 +46,6 @@ func (d *DataInteractor) GetByID(token string, query *entities.Query) ([]entitie
 	data, err := d.DataStore.Get(selectOrder, query.Skip, query.Take, query.StartDate, query.FinishDate)
 	data = filterDataBySensorID(data, int(s))
 	return data, err
-}
-
-// Save inserts data to the storage, if it doesn't exist already
-func (d *DataInteractor) Save(token, id string, data []entities.Payload, timestamp time.Time) error {
-	err := d.Authenticate(token)
-	if err != nil {
-		return err
-	}
-
-	for _, dt := range data {
-		err = d.DataStore.Save(entities.Data{From: id, Payload: dt, Timestamp: timestamp})
-		if err != nil {
-			return fmt.Errorf("error saving data %v: %w", data, err)
-		}
-	}
-
-	return nil
-}
-
-// Authenticate verifies if the access token is valid.
-func (d *DataInteractor) Authenticate(token string) error {
-	err := d.UsersService.Authenticate(token)
-	if err != nil {
-		return err
-	}
-	return nil
 }
 
 func filterDataBySensorID(data []entities.Data, sensorId int) []entities.Data {
