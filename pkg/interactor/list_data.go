@@ -35,10 +35,10 @@ func (d *DataInteractor) List(token string, query *entities.Query) ([]entities.D
 	return data, err
 }
 
-func filterDataBySensorID(data []entities.Data, sensorId int) []entities.Data {
+func filterDataBySensorID(data []entities.Data, sensorID int) []entities.Data {
 	filteredData := make([]entities.Data, 0)
 	for _, v := range data {
-		if v.Payload.SensorId == sensorId {
+		if v.Payload.SensorID == sensorID {
 			filteredData = append(filteredData, v)
 		}
 	}
