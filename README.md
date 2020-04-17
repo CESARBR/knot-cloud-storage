@@ -102,3 +102,237 @@ This will start the server with auto-reload.
 ```bash
 curl http://<hostname>:<port>/healthcheck
 ```
+
+## API
+
+```bash
+POST /data
+```
+
+Stores the device messages.
+
+### Parameters
+#### Head Parameters
+
+Field | Required | Description
+--- | --- | ---
+auth_token | Y | User's authentication token
+
+### Body Parameters
+
+Field | Required | Description
+--- | --- | ---
+data | Y | The message data sent by the device. It includes both sender identification and payload.
+
+### Example
+#### Request
+
+```bash
+POST https://storage.knot.cloud/data
+```
+
+##### Request Body
+```json
+{
+    "from": "188824f0-28c4-475b-ab36-2505402bebcb",
+    "payload": {
+        "sensor_id": 2,
+        "value": 234
+    }
+}
+```
+
+##### Response
+```
+201 Created
+```
+
+---
+
+```
+GET /data
+```
+Get all the device messages.
+
+### Parameters
+#### Header Parameters
+In order to get the device messages, you need to be authenticated as its owner.
+
+Field | Required | Description
+--- | --- | ---
+auth_token | Y | User's authentication token
+
+#### URI Parameters
+Field | Required | Description
+--- | --- | ---
+order | N | Ascending (1) or descending (-1) order, default=1.
+skip | N | The number of data to skip (returns skip + 1), default=0.
+take | N | The maximum number of data that you want from skip + 1 (the number is limited to 100), default=10.
+startDate | N | The start date that you want your set of data (format=YYYY-MM-DD HH:MM:SS).
+finishDate | N | The finish date that you want your set of data (format=YYYY-MM-DD HH:MM:SS).
+
+### Example
+#### Request
+```
+GET https://storage.knot.cloud/data?take=15&order=1
+```
+
+#### Response
+```json
+[
+    {
+        "from": "188824f0-28c4-475b-ab36-2505402bebcb",
+        "payload": {
+            "sensorId": 2,
+            "value": 234
+        },
+        "timestamp": "2020-04-10T10:32:26.456753-03:00"
+    },
+    {
+        "from": "188824f0-28c4-475b-ab36-2505402bebcb",
+        "payload": {
+            "sensorId": 1,
+            "value": true
+        },
+        "timestamp": "2020-04-13T13:56:23.596301-03:00"
+    }
+]
+```
+
+---
+
+```
+GET /data/{deviceID}
+```
+Get the messages by a specific device.
+
+### Parameters
+#### Header Parameters
+In order to get the device messages, you need to be authenticated as its owner.
+
+Field | Required | Description
+--- | --- | ---
+auth_token | Y | User's authentication token
+
+#### URI Parameters
+Field | Required | Description
+--- | --- | ---
+order | N | Ascending (1) or descending (-1) order, default=1.
+skip | N | The number of data to skip (returns skip + 1), default=0.
+take | N | The maximum number of data that you want from skip + 1 (the number is limited to 100), default=10.
+startDate | N | The start date that you want your set of data (format=YYYY-MM-DD HH:MM:SS).
+finishDate | N | The finish date that you want your set of data (format=YYYY-MM-DD HH:MM:SS).
+
+
+### Example
+#### Request
+```
+GET https://storage.knot.cloud/data/cc5429a29afcd158?startDate=2020-04-13 13:00:00
+```
+
+#### Response
+```json
+[
+  {
+        "from": "188824f0-28c4-475b-ab36-2505402bebcb",
+        "payload": {
+            "sensorId": 1,
+            "value": true
+        },
+        "timestamp": "2020-04-13T13:56:23.596301-03:00"
+    }
+]
+```
+
+---
+
+```
+GET /data/{deviceID}/sensor/{sensorID}
+```
+Get the messages by a specific device sensor.
+
+### Parameters
+#### Header Parameters
+In order to get the device messages, you need to be authenticated as its owner.
+
+Field | Required | Description
+--- | --- | ---
+auth_token | Y | User's authentication token
+
+#### URI Parameters
+Field | Required | Description
+--- | --- | ---
+order | N | Ascending (1) or descending (-1) order, default=1.
+skip | N | The number of data to skip (returns skip + 1), default=0.
+take | N | The maximum number of data that you want from skip + 1 (the number is limited to 100), default=10.
+startDate | N | The start date that you want your set of data (format=YYYY-MM-DD HH:MM:SS).
+finishDate | N | The finish date that you want your set of data (format=YYYY-MM-DD HH:MM:SS).
+
+### Example
+#### Request
+
+    GET https://storage.knot.cloud/data/cc5429a29afcd158/sensor/2
+
+#### Response
+```json
+[
+    {
+        "from": "188824f0-28c4-475b-ab36-2505402bebcb",
+        "payload": {
+            "sensorId": 2,
+            "value": 234
+        },
+        "timestamp": "2020-04-10T10:32:26.456753-03:00"
+    }
+]
+```
+
+---
+
+```
+DELETE /data
+```
+Delete all the device messages.
+
+### Parameters
+#### Header Parameters
+In order to delete the messages, you need to be authenticated as a valid user. Only data from the things which are owned by this user will be removed.
+
+Field | Required | Description
+--- | --- | ---
+auth_token | Y | User's authentication token
+
+### Example
+#### Request
+
+    DELETE https://storage.knot.cloud/data
+
+#### Response
+```
+200 OK
+```
+
+---
+
+```
+DELETE /data/{deviceID}
+```
+Delete all messages from a specific device.
+
+### Parameters
+#### Header Parameters
+In order to delete the device messages, you need to be authenticated as its owner.
+
+Field | Required | Description
+--- | --- | ---
+auth_token | Y | User's authentication token
+
+### Example
+#### Request
+
+    DELETE https://storage.knot.cloud/data/cc5429a29afcd158
+
+#### Response
+```
+200 OK
+```
