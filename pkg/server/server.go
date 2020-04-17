@@ -55,9 +55,9 @@ func (s *Server) Stop() {
 func (s *Server) createRouters() *mux.Router {
 	r := mux.NewRouter().StrictSlash(true)
 
-	r.HandleFunc("/data", s.dataController.GetAll).Methods("GET")
-	r.HandleFunc("/data/{deviceId}", s.dataController.GetAll).Methods("GET")
-	r.HandleFunc("/data/{deviceId}/sensor/{id}", s.dataController.GetByID).Methods("GET")
+	r.HandleFunc("/data", s.dataController.List).Methods("GET")
+	r.HandleFunc("/data/{deviceId}", s.dataController.List).Methods("GET")
+	r.HandleFunc("/data/{deviceId}/sensor/{sensorId}", s.dataController.List).Methods("GET")
 	r.HandleFunc("/data", s.dataController.Save).Methods("POST")
 	r.HandleFunc("/data/{deviceId}", s.dataController.DeleteByDeviceID).Methods("DELETE")
 	r.HandleFunc("/data", s.dataController.DeleteAll).Methods("DELETE")

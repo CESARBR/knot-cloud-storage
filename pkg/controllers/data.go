@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 	"strconv"
 	"time"
@@ -19,11 +20,6 @@ type DataController struct {
 	DataInteractor interactor.Interactor
 
 	logger logging.Logger
-}
-
-type errorMessage struct {
-	error   bool
-	message string
 }
 
 // NewDataController constructs the DataController.
@@ -47,41 +43,21 @@ func (d *DataController) respondWithJSON(w http.ResponseWriter, code int, payloa
 	}
 }
 
-// GetAll handles incoming data listing requests.
-func (d *DataController) GetAll(w http.ResponseWriter, r *http.Request) {
-	query, errURL := getURLQueryParams(r)
-	if errURL.error {
-		d.respondWithError(w, http.StatusUnprocessableEntity, errURL.message)
+// List handles incoming data list requests
+func (d *DataController) List(w http.ResponseWriter, r *http.Request) {
+	query, err := getQueryParams(r)
+	if err != nil {
+		d.respondWithError(w, http.StatusUnprocessableEntity, err.Error())
 		return
 	}
 
 	token := r.Header.Get("auth_token")
-	things, err := d.DataInteractor.List(token, query)
+	data, err := d.DataInteractor.List(token, query)
 	if err != nil {
 		d.respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	d.respondWithJSON(w, http.StatusOK, things)
-}
-
-// GetByID handles incmoning data retrievel by id requests.
-func (d *DataController) GetByID(w http.ResponseWriter, r *http.Request) {
-	params := mux.Vars(r)
-	query, errURL := getURLQueryParams(r)
-	query.SensorID = params["id"]
-
-	if errURL.error {
-		d.respondWithError(w, http.StatusUnprocessableEntity, errURL.message)
-		return
-	}
-
-	token := r.Header.Get("auth_token")
-	thing, err := d.DataInteractor.List(token, query)
-	if err != nil {
-		d.respondWithError(w, http.StatusBadRequest, "Invalid Thing ID")
-		return
-	}
-	d.respondWithJSON(w, http.StatusOK, thing)
+	d.respondWithJSON(w, http.StatusOK, data)
 }
 
 // Save handles incoming data insertion requests.
@@ -125,52 +101,56 @@ func (d *DataController) DeleteAll(w http.ResponseWriter, r *http.Request) {
 	d.respondWithJSON(w, http.StatusOK, nil)
 }
 
-func getURLQueryParams(r *http.Request) (query *entities.Query, errorStatus errorMessage) {
-	var err error
+func getQueryParams(r *http.Request) (query *entities.Query, err error) {
+	var startDate time.Time
+	finishDate := time.Now()
+	params := mux.Vars(r)
 	order := 1
 	skip := 0
 	take := 10
-	startDate, err := time.Parse("2006-1-02", "2006-1-02")
-	errorStatus = checkError(err, "error when trying to parse time")
-	finishDate := time.Now()
 
 	for k, v := range r.URL.Query() {
 		switch k {
 		case "order":
 			order, err = strconv.Atoi(v[0])
-			errorStatus = checkError(err, "order must be in the following format: 1 or -1")
+			if err != nil {
+				return nil, errors.New("order must be in the following format: 1 or -1")
+			}
 		case "skip":
 			skip, err = strconv.Atoi(v[0])
-			errorStatus = checkError(err, "skip must be an integer")
+			if err != nil {
+				return nil, errors.New("skip must be an integer")
+			}
 		case "take":
 			take, err = strconv.Atoi(v[0])
-			errorStatus = checkError(err, "take must be an integer (maximum 100)")
+			if err != nil {
+				return nil, errors.New("take must be an integer (maximum 100)")
+			}
+
 			if take > maxItemsAllowedToRequest {
 				take = maxItemsAllowedToRequest
 			}
 		case "startDate":
 			startDate, err = time.Parse("2006-01-02 15:04:05", v[0])
-			errorStatus = checkError(err, "date must be in the following format: YYYY-MM-DD HH:MM:SS")
+			if err != nil {
+				return nil, errors.New("date must be in the following format: YYYY-MM-DD HH:MM:SS")
+			}
+
 		case "finishDate":
 			finishDate, err = time.Parse("2006-01-02 15:04:05", v[0])
-			errorStatus = checkError(err, "date must be in the following format: YYYY-MM-DD HH:MM:SS")
+			if err != nil {
+				return nil, errors.New("date must be in the following format: YYYY-MM-DD HH:MM:SS")
+			}
 		}
 	}
 
 	return &entities.Query{
+		ThingID:    params["deviceId"],
+		SensorID:   params["sensorId"],
 		Order:      order,
 		Skip:       skip,
 		Take:       take,
 		StartDate:  startDate,
 		FinishDate: finishDate,
-	}, errorStatus
-}
-
-func checkError(err error, text string) (errorStatus errorMessage) {
-	if err != nil {
-		errorStatus.error = true
-		errorStatus.message = text
-	}
-
-	return errorStatus
+	}, nil
 }
