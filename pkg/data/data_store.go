@@ -9,21 +9,25 @@ import (
 
 const collection = "data"
 
+// IDataStore represents the interface to data related operations
 type IDataStore interface {
-	Get(query *entities.Query)
-	Save(data entities.Data)
-	Delete(deviceID string)
+	Get(query *entities.Query) ([]entities.Data, error)
+	Save(data entities.Data) error
+	Delete(deviceID string) error
 }
 
+// Store represents the data capabilities implementation
 type Store struct {
 	Database *mgo.Database
 	logger   logging.Logger
 }
 
+// NewStore creates a new Store instance
 func NewStore(database *mgo.Database, logger logging.Logger) *Store {
 	return &Store{database, logger}
 }
 
+// Get returns data messages from the database
 func (ds *Store) Get(query *entities.Query) ([]entities.Data, error) {
 	data := []entities.Data{}
 
@@ -50,6 +54,7 @@ func (ds *Store) Get(query *entities.Query) ([]entities.Data, error) {
 	return data, nil
 }
 
+// Save stores data messages in the database
 func (ds *Store) Save(data entities.Data) error {
 	err := ds.Database.C(collection).Insert(&data)
 	if err != nil {
@@ -59,6 +64,7 @@ func (ds *Store) Save(data entities.Data) error {
 	return nil
 }
 
+// Delete removes data messages from the database
 func (ds *Store) Delete(deviceID string) error {
 	if deviceID == "" {
 		return ds.removeAll(nil)
