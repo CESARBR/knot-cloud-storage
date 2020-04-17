@@ -12,12 +12,7 @@ func (d *DataInteractor) List(token string, query *entities.Query) ([]entities.D
 		return nil, err
 	}
 
-	selectOrder := "timestamp"
-	if query.Order == -1 {
-		selectOrder = "-timestamp"
-	}
-
-	data, err := d.DataStore.Get(selectOrder, query.Skip, query.Take, query.StartDate, query.FinishDate)
+	data, err := d.DataStore.Get(query)
 	if err != nil {
 		d.logger.Error(err)
 	}

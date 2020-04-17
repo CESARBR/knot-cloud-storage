@@ -1,8 +1,6 @@
 package data
 
 import (
-	"time"
-
 	"github.com/CESARBR/knot-cloud-storage/pkg/entities"
 	"github.com/CESARBR/knot-cloud-storage/pkg/logging"
 	"github.com/globalsign/mgo"
@@ -12,7 +10,7 @@ import (
 const collection = "data"
 
 type IDataStore interface {
-	Get(order string, skip, take int, startDate, finishDate time.Time)
+	Get(query *entities.Query)
 	Save(data entities.Data)
 	Delete(deviceID string)
 }
@@ -26,26 +24,27 @@ func NewStore(database *mgo.Database, logger logging.Logger) *Store {
 	return &Store{database, logger}
 }
 
-func (ds *Store) Get(order string, skip, take int, startDate, finishDate time.Time) ([]entities.Data, error) {
-	var data []entities.Data
+func (ds *Store) Get(query *entities.Query) ([]entities.Data, error) {
+	data := []entities.Data{}
 
-	err := ds.Database.C(collection).Find(bson.M{
-		"timestamp": bson.M{
-			"$gt": startDate,
-			"$lt": finishDate,
-		},
-	}).Select(bson.M{
+	selectOrder := "timestamp"
+	if query.Order == -1 {
+		selectOrder = "-timestamp"
+	}
+
+	findQuery, err := ds.getFindQuery(query)
+	if err != nil {
+		return data, nil
+	}
+
+	err = ds.Database.C(collection).Find(findQuery).Select(bson.M{
 		"timestamp": 1,
 		"payload":   1,
 		"from":      1,
-	}).Skip(skip).Sort(order).Limit(take).All(&data)
+	}).Skip(query.Skip).Sort(selectOrder).Limit(query.Take).All(&data)
 	if err != nil {
 		ds.logger.Error(err)
-		return nil, err
-	}
-
-	if data == nil {
-		data = []entities.Data{}
+		return data, err
 	}
 
 	return data, nil
@@ -74,4 +73,19 @@ func (ds *Store) removeAll(query interface{}) error {
 		return err
 	}
 	return nil
+}
+
+func (ds *Store) getFindQuery(query *entities.Query) (bson.M, error) {
+	b := bson.M{
+		"timestamp": bson.M{
+			"$gt": query.StartDate,
+			"$lt": query.FinishDate,
+		},
+	}
+
+	if query.ThingID != "" {
+		b["from"] = query.ThingID
+	}
+
+	return b, nil
 }
