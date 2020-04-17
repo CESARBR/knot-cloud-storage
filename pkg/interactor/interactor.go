@@ -6,7 +6,7 @@ import (
 	"github.com/CESARBR/knot-cloud-storage/pkg/data"
 	"github.com/CESARBR/knot-cloud-storage/pkg/entities"
 	"github.com/CESARBR/knot-cloud-storage/pkg/logging"
-	"github.com/CESARBR/knot-cloud-storage/pkg/users"
+	"github.com/CESARBR/knot-cloud-storage/pkg/things"
 )
 
 // Interactor is an interface that defines the data's use cases operations
@@ -18,21 +18,12 @@ type Interactor interface {
 
 // DataInteractor represents the data layer interactor structure
 type DataInteractor struct {
-	UsersService users.Authenticator
-	DataStore    *data.Store
-	logger       logging.Logger
+	things    things.Lister
+	DataStore *data.Store
+	logger    logging.Logger
 }
 
 // NewDataInteractor creates a new data interactor instance
-func NewDataInteractor(users users.Authenticator, dataStore *data.Store, logger logging.Logger) Interactor {
-	return &DataInteractor{users, dataStore, logger}
-}
-
-// Authenticate verifies if the access token is valid.
-func (d *DataInteractor) Authenticate(token string) error {
-	err := d.UsersService.Authenticate(token)
-	if err != nil {
-		return err
-	}
-	return nil
+func NewDataInteractor(things things.Lister, dataStore *data.Store, logger logging.Logger) Interactor {
+	return &DataInteractor{things, dataStore, logger}
 }
