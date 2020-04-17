@@ -1,3 +1,11 @@
+## [2.0.0](https://github.com/CESARBR/knot-cloud-storage/compare/v1.0.3...v2.0.0)
+
+### Improvements
+
+- Migrate service from Node.js to Go.
+- Rewrite save and list data endpoints.
+- Add delete endpoint.
+
 ## [1.0.3](https://github.com/CESARBR/knot-cloud-storage/compare/v1.0.2...v1.0.3)
 
 ### Bug Fixes
@@ -24,6 +32,6 @@
 
 # [1.0.0](https://github.com/CESARBR/knot-cloud-storage/compare/b76e42b...v1.0.0)
 
-		### Features
+### Features
 
-		- Endpoints to store and retrieve thing data.
+- Endpoints to store and retrieve thing data.
