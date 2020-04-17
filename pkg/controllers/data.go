@@ -27,19 +27,23 @@ func NewDataController(dataInteractor interactor.Interactor, logger logging.Logg
 	return &DataController{dataInteractor, logger}
 }
 
-func (d *DataController) respondWithError(w http.ResponseWriter, code int, msg string) {
-	d.respondWithJSON(w, code, map[string]string{"message": msg})
-}
+func (d *DataController) writeResponse(w http.ResponseWriter, statusCode int, msg interface{}) {
+	w.WriteHeader(statusCode)
+	if msg == nil {
+		return
+	}
 
-func (d *DataController) respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
-	response, _ := json.Marshal(payload)
+	js, err := json.Marshal(msg)
+	if err != nil {
+		d.logger.Errorf("unable to marshal json: %s", err)
+		return
+	}
+
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(code)
-	if payload != nil {
-		_, err := w.Write(response)
-		if err != nil {
-			d.logger.Error(err)
-		}
+	_, err = w.Write(js)
+	if err != nil {
+		d.logger.Errorf("unable to write to connection HTTP: %s", err)
+		return
 	}
 }
 
@@ -47,35 +51,36 @@ func (d *DataController) respondWithJSON(w http.ResponseWriter, code int, payloa
 func (d *DataController) List(w http.ResponseWriter, r *http.Request) {
 	query, err := getQueryParams(r)
 	if err != nil {
-		d.respondWithError(w, http.StatusUnprocessableEntity, err.Error())
+		d.writeResponse(w, http.StatusUnprocessableEntity, err.Error())
 		return
 	}
 
 	token := r.Header.Get("auth_token")
 	data, err := d.DataInteractor.List(token, query)
 	if err != nil {
-		d.respondWithError(w, http.StatusInternalServerError, err.Error())
+		d.writeResponse(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	d.respondWithJSON(w, http.StatusOK, data)
+
+	d.writeResponse(w, http.StatusOK, data)
 }
 
 // Save handles incoming data insertion requests.
 func (d *DataController) Save(w http.ResponseWriter, r *http.Request) {
-	var thing entities.Data
-	if err := json.NewDecoder(r.Body).Decode(&thing); err != nil {
-		d.respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+	var data entities.Data
+	if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
+		d.writeResponse(w, http.StatusUnprocessableEntity, "Invalid request payload")
 		return
 	}
 
 	token := r.Header.Get("auth_token")
-	data := []entities.Payload{thing.Payload}
-	if err := d.DataInteractor.Save(token, thing.From, data, time.Now()); err != nil {
-		d.respondWithError(w, http.StatusInternalServerError, err.Error())
+	payloads := []entities.Payload{data.Payload}
+	if err := d.DataInteractor.Save(token, data.From, payloads, time.Now()); err != nil {
+		d.writeResponse(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 	defer r.Body.Close()
-	d.respondWithJSON(w, http.StatusCreated, thing)
+	d.writeResponse(w, http.StatusCreated, nil)
 }
 
 func (d *DataController) DeleteByDeviceID(w http.ResponseWriter, r *http.Request) {
@@ -84,21 +89,21 @@ func (d *DataController) DeleteByDeviceID(w http.ResponseWriter, r *http.Request
 
 	err := d.DataInteractor.Delete(deviceId)
 	if err != nil {
-		d.respondWithError(w, http.StatusUnprocessableEntity, "Invalid information")
+		d.writeResponse(w, http.StatusUnprocessableEntity, "Invalid information")
 		return
 	}
 
-	d.respondWithJSON(w, http.StatusOK, nil)
+	d.writeResponse(w, http.StatusOK, nil)
 }
 
 func (d *DataController) DeleteAll(w http.ResponseWriter, r *http.Request) {
 	err := d.DataInteractor.Delete("")
 	if err != nil {
-		d.respondWithError(w, http.StatusUnprocessableEntity, "Invalid information")
+		d.writeResponse(w, http.StatusUnprocessableEntity, "Invalid information")
 		return
 	}
 
-	d.respondWithJSON(w, http.StatusOK, nil)
+	d.writeResponse(w, http.StatusOK, nil)
 }
 
 func getQueryParams(r *http.Request) (query *entities.Query, err error) {
