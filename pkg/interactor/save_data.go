@@ -9,7 +9,7 @@ import (
 
 // Save inserts data to the storage, if it doesn't exist already
 func (d *DataInteractor) Save(token, id string, data []entities.Payload, timestamp time.Time) error {
-	err := d.Authenticate(token)
+	_, err := d.things.List(token)
 	if err != nil {
 		return err
 	}
