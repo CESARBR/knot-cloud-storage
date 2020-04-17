@@ -83,11 +83,13 @@ func (d *DataController) Save(w http.ResponseWriter, r *http.Request) {
 	d.writeResponse(w, http.StatusCreated, nil)
 }
 
+// DeleteByDeviceID handles request to delete data by device ID
 func (d *DataController) DeleteByDeviceID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	deviceId := params["deviceId"]
+	token := r.Header.Get("auth_token")
 
-	err := d.DataInteractor.Delete(deviceId)
+	err := d.DataInteractor.Delete(token, deviceId)
 	if err != nil {
 		d.writeResponse(w, http.StatusUnprocessableEntity, "Invalid information")
 		return
@@ -96,8 +98,10 @@ func (d *DataController) DeleteByDeviceID(w http.ResponseWriter, r *http.Request
 	d.writeResponse(w, http.StatusOK, nil)
 }
 
+// DeleteAll handles request to delete all the data associated with the user
 func (d *DataController) DeleteAll(w http.ResponseWriter, r *http.Request) {
-	err := d.DataInteractor.Delete("")
+	token := r.Header.Get("auth_token")
+	err := d.DataInteractor.Delete(token, "")
 	if err != nil {
 		d.writeResponse(w, http.StatusUnprocessableEntity, "Invalid information")
 		return
