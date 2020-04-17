@@ -13,7 +13,7 @@ import (
 type Interactor interface {
 	Save(token, id string, data []entities.Payload, time time.Time) error
 	List(token string, query *entities.Query) ([]entities.Data, error)
-	Delete(deviceID string) error
+	Delete(token, deviceID string) error
 }
 
 // DataInteractor represents the data layer interactor structure
