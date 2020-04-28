@@ -3,7 +3,6 @@ package server
 import (
 	"encoding/json"
 	"fmt"
-	"time"
 
 	"github.com/CESARBR/knot-cloud-storage/pkg/interactor"
 	"github.com/CESARBR/knot-cloud-storage/pkg/logging"
@@ -87,5 +86,5 @@ func (h *Handler) handlePublishData(token string, body []byte) error {
 		return fmt.Errorf("message body parsing error: %w", err)
 	}
 
-	return h.dataInteractor.Save(token, msg.ID, msg.Data, time.Now())
+	return h.dataInteractor.Save(token, msg.ID, msg.Data)
 }

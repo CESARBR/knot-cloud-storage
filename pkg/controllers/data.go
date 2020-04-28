@@ -75,7 +75,7 @@ func (d *DataController) Save(w http.ResponseWriter, r *http.Request) {
 
 	token := r.Header.Get("auth_token")
 	payloads := []entities.Payload{data.Payload}
-	if err := d.DataInteractor.Save(token, data.From, payloads, time.Now()); err != nil {
+	if err := d.DataInteractor.Save(token, data.From, payloads); err != nil {
 		d.writeResponse(w, http.StatusInternalServerError, err.Error())
 		return
 	}
