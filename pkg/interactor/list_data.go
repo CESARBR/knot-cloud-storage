@@ -16,7 +16,11 @@ func (d *DataInteractor) List(token string, query *entities.Query) ([]entities.D
 		return []entities.Data{}, err
 	}
 
-	data = d.filterDataBySensorID(data, query.SensorID)
+	data, err = d.filterDataBySensorID(data, query.ThingID, query.SensorID)
+	if err != nil {
+		return []entities.Data{}, err
+	}
+
 	return data, err
 }
 
@@ -49,7 +53,7 @@ func (d *DataInteractor) getAllData(things []*btEntities.Thing, query *entities.
 		fmt.Println(t.ID)
 		thingData, err := d.DataStore.Get(query)
 		if err != nil {
-			return data, err
+			return data, fmt.Errorf("error getting data: %w", err)
 		}
 
 		data = append(data, thingData...)
@@ -71,18 +75,22 @@ func (d *DataInteractor) verifyAuthorization(token, id string) error {
 		}
 	}
 
-	return errors.New("user is not authorized to list thing's data")
+	return ErrUserNotAuthorized
 }
 
-func (d *DataInteractor) filterDataBySensorID(data []entities.Data, sensorID string) []entities.Data {
+func (d *DataInteractor) filterDataBySensorID(data []entities.Data, thingID string, sensorID string) ([]entities.Data, error) {
 	if sensorID == "" {
-		return data
+		return data, nil
+	}
+
+	if thingID == "" {
+		return nil, ErrDeviceIDNotProvided
 	}
 
 	id, err := strconv.Atoi(sensorID)
 	if err != nil {
-		d.logger.Errorf("Error when trying to parse ID from string to int")
-		return data
+		d.logger.Errorf("failed to parse ID from string to int")
+		return nil, errors.New("failed to parse ID from string to int")
 	}
 
 	filteredData := make([]entities.Data, 0)
@@ -92,5 +100,5 @@ func (d *DataInteractor) filterDataBySensorID(data []entities.Data, sensorID str
 		}
 	}
 
-	return filteredData
+	return filteredData, nil
 }
