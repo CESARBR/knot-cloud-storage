@@ -1,6 +1,8 @@
 package data
 
 import (
+	"time"
+
 	"github.com/CESARBR/knot-cloud-storage/pkg/entities"
 	"github.com/CESARBR/knot-cloud-storage/pkg/logging"
 	"github.com/globalsign/mgo"
@@ -56,6 +58,7 @@ func (ds *store) Get(query *entities.Query) ([]entities.Data, error) {
 
 // Save stores data messages in the database
 func (ds *store) Save(data entities.Data) error {
+	data.Timestamp = time.Now()
 	err := ds.Database.C(collection).Insert(&data)
 	if err != nil {
 		ds.logger.Error(err)
