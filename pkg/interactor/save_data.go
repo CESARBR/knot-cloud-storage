@@ -2,7 +2,6 @@ package interactor
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/CESARBR/knot-cloud-storage/pkg/entities"
 )
@@ -15,7 +14,7 @@ func (d *DataInteractor) Save(token, id string, data []entities.Payload) error {
 	}
 
 	for _, dt := range data {
-		err = d.DataStore.Save(entities.Data{From: id, Payload: dt, Timestamp: time.Now()})
+		err = d.DataStore.Save(entities.Data{From: id, Payload: dt})
 		if err != nil {
 			return fmt.Errorf("error saving data %v: %w", data, err)
 		}
