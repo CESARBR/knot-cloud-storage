@@ -11,8 +11,6 @@ import (
 var (
 	// ErrTokenEmpty is returned for empty access tokens.
 	ErrTokenEmpty = errors.New("no access token provided")
-	// ErrThingIDEmpty is returned for empty thing ID.
-	ErrThingIDEmpty = errors.New("no thing ID provided")
 )
 
 // Lister specifies an API to use the service.
@@ -32,6 +30,10 @@ func New(host string, port uint16, logger logging.Logger) Lister {
 }
 
 func (svc *service) List(token string) ([]*entities.Thing, error) {
+	if token == "" {
+		return nil, ErrTokenEmpty
+	}
+
 	things, err := svc.proxy.List(token)
 	if err != nil {
 		return nil, err
