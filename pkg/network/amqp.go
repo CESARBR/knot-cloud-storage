@@ -55,8 +55,8 @@ func (a *Amqp) Stop() {
 }
 
 // OnMessage receive messages and put them on channel
-func (a *Amqp) OnMessage(msgChan chan InMsg, queueName, exchangeName, key string) error {
-	err := a.declareExchange(exchangeName)
+func (a *Amqp) OnMessage(msgChan chan InMsg, queueName, exchangeName, exchangeType, key string) error {
+	err := a.declareExchange(exchangeName, exchangeType)
 	if err != nil {
 		a.logger.Error(err)
 		return err
@@ -137,15 +137,15 @@ func (a *Amqp) notifyWhenClosed(started chan bool) {
 	}
 }
 
-func (a *Amqp) declareExchange(name string) error {
+func (a *Amqp) declareExchange(name, exchangeType string) error {
 	return a.channel.ExchangeDeclare(
 		name,
-		amqp.ExchangeTopic, // type
-		true,               // durable
-		false,              // delete when complete
-		false,              // internal
-		false,              // noWait
-		nil,                // arguments
+		exchangeType,
+		true,  // durable
+		false, // delete when complete
+		false, // internal
+		false, // noWait
+		nil,   // arguments
 	)
 }
 

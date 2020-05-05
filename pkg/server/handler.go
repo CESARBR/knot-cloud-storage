@@ -7,12 +7,13 @@ import (
 	"github.com/CESARBR/knot-cloud-storage/pkg/interactor"
 	"github.com/CESARBR/knot-cloud-storage/pkg/logging"
 	"github.com/CESARBR/knot-cloud-storage/pkg/network"
+	"github.com/pkg/errors"
 )
 
 const (
-	queueNameFogIn        = "storage-thing-data"
-	exchangeFogIn         = "fogIn"
-	bindingKeyDataPublish = "data.publish"
+	queue        = "storage-thing-data"
+	exchange     = "data.published"
+	exchangeType = "fanout"
 )
 
 // Handler handle messages received from a service
@@ -49,7 +50,7 @@ func (h *Handler) Stop() {
 }
 
 func (h *Handler) subscribeToMessages(msgChan chan network.InMsg) error {
-	err := h.amqp.OnMessage(msgChan, queueNameFogIn, exchangeFogIn, bindingKeyDataPublish)
+	err := h.amqp.OnMessage(msgChan, queue, exchange, exchangeType, "")
 	if err != nil {
 		return fmt.Errorf("fail to subscribe in message queue: %w", err)
 	}
@@ -72,11 +73,12 @@ func (h *Handler) onMsgReceived(msgChan chan network.InMsg) {
 }
 
 func (h *Handler) handleMessages(msg network.InMsg) error {
-	switch msg.RoutingKey {
-	case "data.publish":
-		return h.handlePublishData(msg.Headers["Authorization"].(string), msg.Body)
+	token, ok := msg.Headers["Authorization"].(string)
+	if !ok {
+		return errors.New("authorization token not provided")
 	}
-	return nil
+
+	return h.handlePublishData(token, msg.Body)
 }
 
 func (h *Handler) handlePublishData(token string, body []byte) error {
@@ -86,5 +88,11 @@ func (h *Handler) handlePublishData(token string, body []byte) error {
 		return fmt.Errorf("message body parsing error: %w", err)
 	}
 
-	return h.dataInteractor.Save(token, msg.ID, msg.Data)
+	err = h.dataInteractor.Save(token, msg.ID, msg.Data)
+	if err != nil {
+		return err
+	}
+
+	h.logger.Info("data successfully saved")
+	return nil
 }
