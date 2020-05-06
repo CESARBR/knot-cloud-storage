@@ -1,12 +1,14 @@
 package data
 
 import (
+	"context"
 	"time"
 
 	"github.com/CESARBR/knot-cloud-storage/pkg/entities"
 	"github.com/CESARBR/knot-cloud-storage/pkg/logging"
-	"github.com/globalsign/mgo"
-	"github.com/globalsign/mgo/bson"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 const collection = "data"
@@ -20,12 +22,12 @@ type Store interface {
 
 // store represents the data capabilities implementation
 type store struct {
-	Database *mgo.Database
+	Database *mongo.Database
 	logger   logging.Logger
 }
 
 // NewStore creates a new Store instance
-func NewStore(database *mgo.Database, logger logging.Logger) Store {
+func NewStore(database *mongo.Database, logger logging.Logger) Store {
 	return &store{database, logger}
 }
 
@@ -33,33 +35,34 @@ func NewStore(database *mgo.Database, logger logging.Logger) Store {
 func (ds *store) Get(query *entities.Query) ([]entities.Data, error) {
 	data := []entities.Data{}
 
-	selectOrder := "timestamp"
-	if query.Order == -1 {
-		selectOrder = "-timestamp"
-	}
-
 	findQuery, err := ds.getFindQuery(query)
 	if err != nil {
 		return data, nil
 	}
 
-	err = ds.Database.C(collection).Find(findQuery).Select(bson.M{
-		"timestamp": 1,
-		"payload":   1,
-		"from":      1,
-	}).Skip(query.Skip).Sort(selectOrder).Limit(query.Take).All(&data)
+	options := ds.getFindOptions(query)
+	cur, err := ds.Database.Collection(collection).Find(context.TODO(), findQuery, options)
 	if err != nil {
 		ds.logger.Error(err)
 		return data, err
 	}
 
+	for cur.Next(context.TODO()) {
+		var decodedData entities.Data
+		err = cur.Decode(&decodedData)
+		if err != nil {
+			return data, err
+		}
+
+		data = append(data, decodedData)
+	}
 	return data, nil
 }
 
 // Save stores data messages in the database
 func (ds *store) Save(data entities.Data) error {
 	data.Timestamp = time.Now()
-	err := ds.Database.C(collection).Insert(&data)
+	_, err := ds.Database.Collection(collection).InsertOne(context.TODO(), &data)
 	if err != nil {
 		ds.logger.Error(err)
 		return err
@@ -70,13 +73,13 @@ func (ds *store) Save(data entities.Data) error {
 // Delete removes data messages from the database
 func (ds *store) Delete(deviceID string) error {
 	if deviceID == "" {
-		return ds.removeAll(nil)
+		return ds.removeAll(bson.M{})
 	}
 	return ds.removeAll(bson.M{"from": deviceID})
 }
 
 func (ds *store) removeAll(query interface{}) error {
-	_, err := ds.Database.C(collection).RemoveAll(query)
+	_, err := ds.Database.Collection(collection).DeleteMany(context.TODO(), query)
 	if err != nil {
 		ds.logger.Error(err)
 		return err
@@ -97,4 +100,20 @@ func (ds *store) getFindQuery(query *entities.Query) (bson.M, error) {
 	}
 
 	return b, nil
+}
+
+func (ds *store) getFindOptions(query *entities.Query) *options.FindOptions {
+	options := options.Find()
+	options.SetProjection(
+		bson.M{
+			"timestamp": 1,
+			"payload":   1,
+			"from":      1,
+		},
+	)
+	options.SetSkip(query.Skip)
+	options.SetLimit(query.Take)
+	options.SetSort(bson.M{"timestamp": query.Order})
+
+	return options
 }
