@@ -9,8 +9,8 @@ type Query struct {
 	ThingID    string
 	SensorID   string
 	Order      int
-	Skip       int
-	Take       int
+	Skip       int64
+	Take       int64
 	StartDate  time.Time
 	FinishDate time.Time
 }

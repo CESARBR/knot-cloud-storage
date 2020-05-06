@@ -1,7 +1,11 @@
 package data
 
 import (
-	"github.com/globalsign/mgo"
+	"context"
+
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
 type MongoDB struct {
@@ -13,12 +17,22 @@ func NewMongoDB(server string, database string) *MongoDB {
 	return &MongoDB{server, database}
 }
 
-func (s *MongoDB) Connect() (*mgo.Database, error) {
-	session, err := mgo.Dial(s.Server)
+func (s *MongoDB) Connect() (*mongo.Database, error) {
+	clientOptions := options.Client().ApplyURI(s.Server)
+	client, err := mongo.NewClient(clientOptions)
 	if err != nil {
 		return nil, err
 	}
-	database := session.DB(s.Database)
 
-	return database, nil
+	err = client.Connect(context.Background())
+	if err != nil {
+		return nil, err
+	}
+
+	err = client.Ping(context.Background(), readpref.Primary())
+	if err != nil {
+		return nil, err
+	}
+
+	return client.Database(s.Database), nil
 }

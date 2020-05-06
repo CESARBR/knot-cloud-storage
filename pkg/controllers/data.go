@@ -115,8 +115,8 @@ func getQueryParams(r *http.Request) (query *entities.Query, err error) {
 	finishDate := time.Now()
 	params := mux.Vars(r)
 	order := 1
-	skip := 0
-	take := 10
+	var skip int64 = 0
+	var take int64 = 10
 
 	for k, v := range r.URL.Query() {
 		switch k {
@@ -126,12 +126,12 @@ func getQueryParams(r *http.Request) (query *entities.Query, err error) {
 				return nil, errors.New("order must be in the following format: 1 or -1")
 			}
 		case "skip":
-			skip, err = strconv.Atoi(v[0])
+			skip, err = strconv.ParseInt(v[0], 10, 64)
 			if err != nil {
 				return nil, errors.New("skip must be an integer")
 			}
 		case "take":
-			take, err = strconv.Atoi(v[0])
+			take, err = strconv.ParseInt(v[0], 10, 64)
 			if err != nil {
 				return nil, errors.New("take must be an integer (maximum 100)")
 			}
