@@ -49,64 +49,80 @@ func (d *DataController) writeResponse(w http.ResponseWriter, statusCode int, ms
 
 // List handles incoming data list requests
 func (d *DataController) List(w http.ResponseWriter, r *http.Request) {
+	d.logger.Debug("get data request received")
 	query, err := getQueryParams(r)
 	if err != nil {
+		d.logger.Errorf("failed to get query params: %s", err)
 		d.writeResponse(w, http.StatusUnprocessableEntity, err.Error())
 		return
 	}
+	d.logger.Debug("query params received %v", query)
 
 	token := r.Header.Get("auth_token")
 	data, err := d.DataInteractor.List(token, query)
 	if err != nil {
+		d.logger.Errorf("failed to get data: %s", err)
 		d.writeResponse(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
+	d.logger.Info("data successfully obtained")
 	d.writeResponse(w, http.StatusOK, data)
 }
 
 // Save handles incoming data insertion requests.
 func (d *DataController) Save(w http.ResponseWriter, r *http.Request) {
+	d.logger.Debug("save data request received")
 	var data entities.Data
 	if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
+		d.logger.Errorf("failed to decode payload: %s", err)
 		d.writeResponse(w, http.StatusUnprocessableEntity, "Invalid request payload")
 		return
 	}
+	d.logger.Debug("payload received: %v", data)
 
 	token := r.Header.Get("auth_token")
 	payloads := []entities.Payload{data.Payload}
 	if err := d.DataInteractor.Save(token, data.From, payloads); err != nil {
+		d.logger.Errorf("failed to save data: %s", err)
 		d.writeResponse(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 	defer r.Body.Close()
+	d.logger.Info("successfully saved data")
 	d.writeResponse(w, http.StatusCreated, nil)
 }
 
 // DeleteByDeviceID handles request to delete data by device ID
 func (d *DataController) DeleteByDeviceID(w http.ResponseWriter, r *http.Request) {
+	d.logger.Debug("delete data request received")
 	params := mux.Vars(r)
 	deviceID := params["deviceId"]
 	token := r.Header.Get("auth_token")
 
 	err := d.DataInteractor.Delete(token, deviceID)
 	if err != nil {
+		d.logger.Errorf("failed to delete data: %s", err)
 		d.writeResponse(w, http.StatusUnprocessableEntity, "Invalid information")
 		return
 	}
 
+	d.logger.Info("data with %s successfully deleted", deviceID)
 	d.writeResponse(w, http.StatusOK, nil)
 }
 
 // DeleteAll handles request to delete all the data associated with the user
 func (d *DataController) DeleteAll(w http.ResponseWriter, r *http.Request) {
+	d.logger.Debug("delete all data request received")
 	token := r.Header.Get("auth_token")
 	err := d.DataInteractor.Delete(token, "")
 	if err != nil {
+		d.logger.Errorf("failed to delete data: %s", err)
 		d.writeResponse(w, http.StatusUnprocessableEntity, "Invalid information")
 		return
 	}
 
+	d.logger.Info("successfully deleted all data")
 	d.writeResponse(w, http.StatusOK, nil)
 }
 
