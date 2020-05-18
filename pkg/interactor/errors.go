@@ -8,4 +8,10 @@ var (
 
 	// ErrDeviceIDNotProvided is returned when the user request to filter the data by sensorID, but don't provide the deviceID
 	ErrDeviceIDNotProvided = errors.New("deviceID not provided")
+
+	// ErrValidToken is returned when the service to valid the token returns an error
+	ErrValidToken = errors.New("failed to valid token")
+
+	// ErrToParseString is returned when the parse from string to int of the sensorID fails
+	ErrToParseString = errors.New("failed to parse ID from string to int")
 )
