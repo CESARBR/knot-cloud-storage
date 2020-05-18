@@ -5,6 +5,7 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/CESARBR/knot-cloud-storage/pkg/entities"
@@ -62,7 +63,7 @@ func (d *DataController) List(w http.ResponseWriter, r *http.Request) {
 	data, err := d.DataInteractor.List(token, query)
 	if err != nil {
 		d.logger.Errorf("failed to get data: %s", err)
-		d.writeResponse(w, http.StatusInternalServerError, err.Error())
+		d.writeResponseByError(w, err)
 		return
 	}
 
@@ -85,7 +86,7 @@ func (d *DataController) Save(w http.ResponseWriter, r *http.Request) {
 	payloads := []entities.Payload{data.Payload}
 	if err := d.DataInteractor.Save(token, data.From, payloads); err != nil {
 		d.logger.Errorf("failed to save data: %s", err)
-		d.writeResponse(w, http.StatusInternalServerError, err.Error())
+		d.writeResponseByError(w, err)
 		return
 	}
 	defer r.Body.Close()
@@ -103,7 +104,7 @@ func (d *DataController) DeleteByDeviceID(w http.ResponseWriter, r *http.Request
 	err := d.DataInteractor.Delete(token, deviceID)
 	if err != nil {
 		d.logger.Errorf("failed to delete data: %s", err)
-		d.writeResponse(w, http.StatusUnprocessableEntity, "Invalid information")
+		d.writeResponseByError(w, err)
 		return
 	}
 
@@ -118,7 +119,7 @@ func (d *DataController) DeleteAll(w http.ResponseWriter, r *http.Request) {
 	err := d.DataInteractor.Delete(token, "")
 	if err != nil {
 		d.logger.Errorf("failed to delete data: %s", err)
-		d.writeResponse(w, http.StatusUnprocessableEntity, "Invalid information")
+		d.writeResponseByError(w, err)
 		return
 	}
 
@@ -178,4 +179,20 @@ func getQueryParams(r *http.Request) (query *entities.Query, err error) {
 		StartDate:  startDate,
 		FinishDate: finishDate,
 	}, nil
+}
+func (d *DataController) writeResponseByError(w http.ResponseWriter, err error) {
+	switch err.Error() {
+	case interactor.ErrUserNotAuthorized.Error():
+		d.writeResponse(w, http.StatusUnauthorized, err.Error())
+	case interactor.ErrDeviceIDNotProvided.Error():
+		d.writeResponse(w, http.StatusBadRequest, err.Error())
+	case interactor.ErrToParseString.Error():
+		d.writeResponse(w, http.StatusUnprocessableEntity, err.Error())
+	default:
+		if strings.Contains(err.Error(), interactor.ErrValidToken.Error()) {
+			d.writeResponse(w, http.StatusUnauthorized, err.Error())
+			break
+		}
+		d.writeResponse(w, http.StatusInternalServerError, err.Error())
+	}
 }

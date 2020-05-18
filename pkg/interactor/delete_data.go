@@ -6,7 +6,7 @@ import "fmt"
 func (d *DataInteractor) Delete(token, deviceID string) error {
 	_, err := d.things.List(token)
 	if err != nil {
-		return err
+		return fmt.Errorf("%s: %v", ErrValidToken, err)
 	}
 
 	err = d.DataStore.Delete(deviceID)

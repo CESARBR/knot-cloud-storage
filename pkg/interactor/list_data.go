@@ -1,7 +1,6 @@
 package interactor
 
 import (
-	"errors"
 	"fmt"
 	"strconv"
 
@@ -28,7 +27,7 @@ func (d *DataInteractor) getDevicesData(token string, query *entities.Query) ([]
 	data := []entities.Data{}
 	things, err := d.things.List(token)
 	if err != nil {
-		return data, err
+		return data, fmt.Errorf("%s: %v", ErrValidToken, err)
 	}
 
 	if query.ThingID != "" {
@@ -65,7 +64,7 @@ func (d *DataInteractor) getAllData(things []*btEntities.Thing, query *entities.
 func (d *DataInteractor) verifyAuthorization(token, id string) error {
 	things, err := d.things.List(token)
 	if err != nil {
-		return err
+		return fmt.Errorf("%s: %v", ErrValidToken, err)
 	}
 
 	for _, t := range things {
@@ -90,7 +89,7 @@ func (d *DataInteractor) filterDataBySensorID(data []entities.Data, thingID stri
 	id, err := strconv.Atoi(sensorID)
 	if err != nil {
 		d.logger.Errorf("failed to parse ID from string to int")
-		return nil, errors.New("failed to parse ID from string to int")
+		return nil, ErrToParseString
 	}
 
 	filteredData := make([]entities.Data, 0)
