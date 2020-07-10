@@ -262,7 +262,6 @@ func TestListData(t *testing.T) {
 		dataInteractor := NewDataInteractor(tc.fakeThingService, tc.fakeDataStore, tc.fakeLogger)
 		_, err := dataInteractor.List(tc.authorization, tc.query)
 
-		t.Log(err)
 		assert.EqualValues(t, errors.Is(err, tc.expectedError), true)
 
 		tc.fakeDataStore.AssertExpectations(t)
