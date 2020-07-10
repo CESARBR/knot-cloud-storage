@@ -12,9 +12,6 @@ import (
 var (
 	// ErrSaveDataDB is returned when the database fails to save data
 	errSaveData = errors.New("failed to save data")
-
-	// ErrTokenEmpty is returned for empty access tokens.
-	errTokenEmpty = errors.New("no access token provided")
 )
 
 type SaveDataTestCase struct {
@@ -38,8 +35,8 @@ var sdCases = []SaveDataTestCase{
 		entities.Data{},
 		&mocks.FakeLogger{},
 		&mocks.FakeDataStore{},
-		&mocks.FakeThingService{ReturnErr: errTokenEmpty},
-		errTokenEmpty,
+		&mocks.FakeThingService{ReturnErr: ErrTokenEmpty},
+		ErrTokenEmpty,
 	},
 	{
 		"data successfully saved on the database",
