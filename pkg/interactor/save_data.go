@@ -10,7 +10,7 @@ import (
 func (d *DataInteractor) Save(token, id string, data []entities.Payload) error {
 	_, err := d.things.List(token)
 	if err != nil {
-		return fmt.Errorf("%s: %v", ErrValidToken, err)
+		return fmt.Errorf("%v: %w", ErrValidToken, err)
 	}
 
 	for _, dt := range data {

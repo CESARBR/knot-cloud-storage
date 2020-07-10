@@ -27,7 +27,7 @@ func (d *DataInteractor) getDevicesData(token string, query *entities.Query) ([]
 	data := []entities.Data{}
 	things, err := d.things.List(token)
 	if err != nil {
-		return data, fmt.Errorf("%s: %v", ErrValidToken, err)
+		return data, fmt.Errorf("%v: %w", ErrValidToken, err)
 	}
 
 	if query.ThingID != "" {
