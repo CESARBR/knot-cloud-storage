@@ -32,9 +32,9 @@ var ddCases = []DeleteDataTestCase{
 		&mocks.FakeLogger{},
 		&mocks.FakeDataStore{},
 		&mocks.FakeThingService{
-			ReturnErr: errTokenEmpty,
+			ReturnErr: ErrTokenEmpty,
 		},
-		errTokenEmpty,
+		ErrTokenEmpty,
 	},
 	{
 		"successful delete on the database",

@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	// ErrDeleteDataDB is returned when the database fails to get data
+	// errGetData is returned when the database fails to get data
 	errGetData = errors.New("failed to get data")
 )
 
@@ -34,9 +34,9 @@ var ldCases = []ListDataTestCase{
 		&mocks.FakeLogger{},
 		&mocks.FakeDataStore{},
 		&mocks.FakeThingService{
-			ReturnErr: errTokenEmpty,
+			ReturnErr: ErrTokenEmpty,
 		},
-		errTokenEmpty,
+		ErrTokenEmpty,
 	},
 	{
 		"successful get on the database",
@@ -153,28 +153,6 @@ var ldCases = []ListDataTestCase{
 			},
 		},
 		nil,
-	},
-	{
-		"deviceID not provided to filter by sensorID",
-		"authorization-token",
-		&entities.Query{
-			SensorID: "1",
-		},
-		&mocks.FakeLogger{},
-		&mocks.FakeDataStore{
-			Data: []entities.Data{
-				{
-					From: "fc3fcf912d0c290a",
-					Payload: entities.Payload{
-						SensorID: 1,
-						Value:    3,
-					},
-					Timestamp: time.Now(),
-				},
-			},
-		},
-		&mocks.FakeThingService{},
-		ErrDeviceIDNotProvided,
 	},
 	{
 		"user not authorized to list thing's data",

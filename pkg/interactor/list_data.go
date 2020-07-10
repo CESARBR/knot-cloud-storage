@@ -10,94 +10,71 @@ import (
 
 // List provides all the thing's data owned by an user
 func (d *DataInteractor) List(token string, query *entities.Query) ([]entities.Data, error) {
-	data, err := d.getDevicesData(token, query)
-	if err != nil {
-		return []entities.Data{}, err
+	if token == "" {
+		return nil, ErrTokenEmpty
 	}
 
-	data, err = d.filterDataBySensorID(data, query.ThingID, query.SensorID)
-	if err != nil {
-		return []entities.Data{}, err
-	}
-
-	return data, err
-}
-
-func (d *DataInteractor) getDevicesData(token string, query *entities.Query) ([]entities.Data, error) {
-	data := []entities.Data{}
 	things, err := d.things.List(token)
 	if err != nil {
-		return data, fmt.Errorf("%v: %w", ErrValidToken, err)
+		return nil, fmt.Errorf("error getting list of things: %w", err)
 	}
 
 	if query.ThingID != "" {
-		err := d.verifyAuthorization(token, query.ThingID)
+		things, err = d.verifyThingID(things, query.ThingID)
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("thing ID not in user things list: %w", err)
 		}
 	}
 
-	data, err = d.getAllData(things, query)
+	data, err := d.getAllData(things, query)
 	if err != nil {
-		return data, err
+		return nil, fmt.Errorf("error getting the data: %w", err)
+	}
+
+	if query.SensorID != "" {
+		data, err = d.filterDataBySensorID(data, query.SensorID)
+		if err != nil {
+			return nil, fmt.Errorf("error filtering data by sensor ID: %w", err)
+		}
 	}
 
 	return data, nil
+}
+
+func (d *DataInteractor) verifyThingID(things []*btEntities.Thing, thingID string) ([]*btEntities.Thing, error) {
+	for _, t := range things {
+		if t.ID == thingID {
+			return []*btEntities.Thing{{ID: thingID}}, nil
+		}
+	}
+	return nil, ErrUserNotAuthorized
 }
 
 func (d *DataInteractor) getAllData(things []*btEntities.Thing, query *entities.Query) ([]entities.Data, error) {
 	data := []entities.Data{}
 	for _, t := range things {
 		query.ThingID = t.ID
-		fmt.Println(t.ID)
 		thingData, err := d.DataStore.Get(query)
 		if err != nil {
-			return data, fmt.Errorf("error getting data: %w", err)
+			return nil, fmt.Errorf("error getting data: %w", err)
 		}
-
 		data = append(data, thingData...)
 	}
-
 	return data, nil
 }
 
-func (d *DataInteractor) verifyAuthorization(token, id string) error {
-	things, err := d.things.List(token)
-	if err != nil {
-		return fmt.Errorf("%s: %v", ErrValidToken, err)
-	}
-
-	for _, t := range things {
-		fmt.Println(t.ID)
-		if t.ID == id {
-			return nil
-		}
-	}
-
-	return ErrUserNotAuthorized
-}
-
-func (d *DataInteractor) filterDataBySensorID(data []entities.Data, thingID string, sensorID string) ([]entities.Data, error) {
-	if sensorID == "" {
-		return data, nil
-	}
-
-	if thingID == "" {
-		return nil, ErrDeviceIDNotProvided
-	}
-
+func (d *DataInteractor) filterDataBySensorID(data []entities.Data, sensorID string) ([]entities.Data, error) {
 	id, err := strconv.Atoi(sensorID)
 	if err != nil {
-		d.logger.Errorf("failed to parse ID from string to int")
-		return nil, ErrToParseString
+		return nil, fmt.Errorf("error parsing ID from string to int: %w", err)
 	}
 
-	filteredData := make([]entities.Data, 0)
-	for _, v := range data {
-		if v.Payload.SensorID == id {
-			filteredData = append(filteredData, v)
+	sensorData := []entities.Data{}
+	for _, dt := range data {
+		if dt.Payload.SensorID == id {
+			sensorData = append(sensorData, dt)
 		}
 	}
 
-	return filteredData, nil
+	return sensorData, nil
 }

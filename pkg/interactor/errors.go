@@ -3,6 +3,9 @@ package interactor
 import "errors"
 
 var (
+	// ErrTokenEmpty is returned when no authorization token is provided
+	ErrTokenEmpty = errors.New("authorization token not provided")
+
 	// ErrUserNotAuthorized is returned when the user is not authorized to list the thing requested
 	ErrUserNotAuthorized = errors.New("user is not authorized to list thing's data")
 
