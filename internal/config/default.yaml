@@ -1,11 +1,11 @@
 server:
   port: 80
 
-MongoDB:
+mongodb:
   host: mongodb://mongo
   name: things_db
 
-Users:
+things:
   host: localhost
   port: 80
 
