@@ -30,8 +30,8 @@ type MongoDB struct {
 	Name string
 }
 
-// Users represents the users service configuration properties
-type Users struct {
+// Things represents the things service configuration properties
+type Things struct {
 	Host string
 	Port int
 }
@@ -42,7 +42,7 @@ type Config struct {
 	Logger
 	RabbitMQ
 	MongoDB
-	Users
+	Things
 }
 
 func readFile(name string) {

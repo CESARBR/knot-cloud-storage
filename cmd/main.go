@@ -32,7 +32,7 @@ func main() {
 	amqpStartChan := make(chan bool, 1)
 	amqp := network.NewAmqp(config.RabbitMQ.URL, logrus.Get("AMQP"))
 
-	thingsService := things.New(config.Users.Host, uint16(config.Users.Port), logger)
+	thingsService := things.New(config.Things.Host, uint16(config.Things.Port), logger)
 	dataStore := data.NewStore(database, logrus.Get("Storage"))
 	dataInteractor := interactor.NewDataInteractor(thingsService, dataStore, logrus.Get("Interactor"))
 	dataController := controllers.NewDataController(dataInteractor, logrus.Get("Controller"))
