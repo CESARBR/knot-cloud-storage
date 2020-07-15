@@ -27,8 +27,42 @@ type store struct {
 }
 
 // NewStore creates a new Store instance
-func NewStore(database *mongo.Database, logger logging.Logger) Store {
+func NewStore(database *mongo.Database, logger logging.Logger, expTime int32) Store {
+	err := setupDataExpiration(database, expTime)
+	if err != nil {
+		logger.Infof("fail to set data expiration time: %w", err)
+	}
+
 	return &store{database, logger}
+}
+
+func setupDataExpiration(db *mongo.Database, time int32) error {
+	if time == 0 {
+		return nil
+	}
+
+	_, err := db.Collection(collection).Indexes().DropAll(context.TODO())
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Collection(collection).Indexes().CreateOne(context.TODO(), getTimestampIndex(time))
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func getTimestampIndex(time int32) mongo.IndexModel {
+	return mongo.IndexModel{
+		Keys: bson.M{
+			"timestamp": 1,
+		},
+		Options: &options.IndexOptions{
+			ExpireAfterSeconds: &time,
+		},
+	}
 }
 
 // Get returns data messages from the database
