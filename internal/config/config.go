@@ -36,6 +36,11 @@ type Things struct {
 	Port int
 }
 
+// Expiration represents the data TTL configuration
+type Expiration struct {
+	Time int32
+}
+
 // Config represents the service configuration
 type Config struct {
 	Server
@@ -43,6 +48,7 @@ type Config struct {
 	RabbitMQ
 	MongoDB
 	Things
+	Expiration
 }
 
 func readFile(name string) {
