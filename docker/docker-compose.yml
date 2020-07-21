@@ -1,0 +1,84 @@
+version: '3.7'
+
+services:
+  # Mainflux services
+  users:
+    image: mainflux/users:0.10.0
+    env_file: './env.d/mainflux-users.env'
+    depends_on:
+      - users-db
+    deploy:
+      replicas: 1
+  
+  things:
+    image: mainflux/things:0.10.0
+    env_file: './env.d/mainflux-things.env'
+    depends_on:
+      - things-db
+      - users
+    deploy:
+      replicas: 1
+
+  authn:
+    image: mainflux/authn:0.10.0
+    env_file: './env.d/mainflux-authn.env'    
+    depends_on:
+      - authn-db
+      - jaeger
+    deploy:
+      replicas: 1
+  
+  users-db:
+    image: postgres:9.6.17-alpine
+    env_file: './env.d/mainflux-users.env'
+    volumes:
+      - mainflux-users-db-volume:/var/lib/postgresql/data
+    deploy:
+      replicas: 1
+  
+  things-db:
+    image: postgres:9.6.17-alpine
+    env_file: './env.d/mainflux-things.env'
+    volumes:
+      - mainflux-things-db-volume:/var/lib/postgresql/data
+    deploy:
+      replicas: 1
+  
+  authn-db:
+    image: postgres:9.6.17-alpine
+    env_file: './env.d/mainflux-authn.env'
+    volumes:
+      - mainflux-authn-db-volume:/var/lib/postgresql/data
+    deploy:
+      replicas: 1
+  
+  jaeger:
+    image: jaegertracing/all-in-one:1.13
+    env_file: './env.d/mainflux-jaeger.env'
+    deploy:
+      replicas: 1
+  
+  rabbitmq:
+    image: rabbitmq
+    env_file: './env.d/rabbitmq.env'
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    deploy:
+      replicas: 1
+  
+  mongo:
+    image: mongo
+    volumes:
+      - mongo-data:/data/db
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          memory: 300M 
+
+volumes:
+  mainflux-things-db-volume:
+  mainflux-users-db-volume:
+  mainflux-authn-db-volume:
+  rabbitmq-data:
+  mongo-data:
