@@ -16,7 +16,7 @@ import (
 func main() {
 	config := config.Load()
 
-	logrus := logging.NewLogrus(config.Logger.Level)
+	logrus := logging.NewLogrus(config.Logger.Level, config.Logger.Syslog)
 	logger := logrus.Get("Main")
 	logger.Info("Starting KNoT Cloud Storage")
 
