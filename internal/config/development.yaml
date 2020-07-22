@@ -14,6 +14,7 @@ rabbitmq:
 
 logger:
   level: debug
+  syslog: false
 
 expiration:
   time: 604800
