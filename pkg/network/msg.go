@@ -9,3 +9,8 @@ type DataPublish struct {
 	ID   string             `json:"id"`
 	Data []entities.Payload `json:"data"`
 }
+
+// DeviceUnregistered represents the incoming unregistered device event
+type DeviceUnregistered struct {
+	ID string `json:"id"`
+}
