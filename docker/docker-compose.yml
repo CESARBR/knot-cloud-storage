@@ -5,6 +5,8 @@ services:
   users:
     image: mainflux/users:0.10.0
     env_file: './env.d/mainflux-users.env'
+    ports:
+      - 8180:8180
     depends_on:
       - users-db
     deploy:
@@ -21,7 +23,7 @@ services:
 
   authn:
     image: mainflux/authn:0.10.0
-    env_file: './env.d/mainflux-authn.env'    
+    env_file: './env.d/mainflux-authn.env'
     depends_on:
       - authn-db
       - jaeger
@@ -63,6 +65,8 @@ services:
     env_file: './env.d/rabbitmq.env'
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
+    ports:
+      - 5672:5672
     deploy:
       replicas: 1
   
@@ -70,11 +74,24 @@ services:
     image: mongo
     volumes:
       - mongo-data:/data/db
+    ports:
+      - 27017:27017
+      - 8182:8182
     deploy:
       replicas: 1
       resources:
         limits:
-          memory: 300M 
+          memory: 300M
+
+  storage:
+    image: cesarbr/knot-cloud-storage
+    env_file: './env.d/knot-cloud-storage.env'
+    ports:
+      - 80:80
+    depends_on:
+      - mongo
+    deploy:
+      replicas: 1
 
 volumes:
   mainflux-things-db-volume:
