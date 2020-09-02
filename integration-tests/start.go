@@ -3,130 +3,49 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
-	"log"
+	"github.com/CESARBR/knot-cloud-storage/pkg/entities"
+	"github.com/CESARBR/knot-cloud-storage/pkg/logging"
 	"net/http"
 	"os"
-	"regexp"
-	"strings"
+	"time"
 )
-
-type createTokenResponse struct {
-	Token string
-}
-
-type user struct {
-	Email, Password string
-}
-
-type connection struct {
-	Server, Port string
-}
 
 func main() {
 
-	if len(os.Args) == 1 {
-		// Make a default user and a default connection
-		usr := &user{}
-		usr.Email = "test@test.com"
-		usr.Password = "abcdef"
-		data := map[string]string{"email": usr.Email, "password": usr.Password}
-		buff, err := json.Marshal(data)
+	usr := getUserCredentials(os.Args)
+	buff := getUserJSON(usr)
+	url := getURL(usr, "users")
+	resp, err := http.Post(url, "application/json", bytes.NewBuffer(buff))
+	failOnError(err, "Failed to do a HTTP POST")
+	resp.Body.Close()
 
-		if err != nil {
-			log.Fatal(err)
-		}
+	// Make a token creation POST request
+	tokenURL := getURL(usr, "tokens")
+	tokenResp, err := http.Post(tokenURL, "application/json", bytes.NewBuffer(buff))
+	failOnError(err, "Failed to do a HTTP POST")
 
-		conn := &connection{}
-		conn.Server = "localhost"
-		conn.Port = "8180"
-        str := []string{"http://", conn.Server, ":", conn.Port, "/users"}
-		url := strings.Join(str, "")
-		resp, err := http.Post(url, "application/json", bytes.NewBuffer(buff))
+	token := &userToken{}
+	json.NewDecoder(tokenResp.Body).Decode(token)
+	tokenResp.Body.Close()
 
-		if err != nil {
-			log.Fatal(err)
-		}
-		resp.Body.Close()
+	config := getLogger("debug")
+	logrus := logging.NewLogrus(config.Level, false)
+	logger := logrus.Get("Main")
+	logger.Info("Starting storage test")
 
-		// Make a token creation POST request
-		tokenUrl := strings.Replace(url, "users", "tokens", -1)
-		tokenResp, err := http.Post(tokenUrl, "application/json", bytes.NewBuffer(buff))
+	payload, body := getPayload("fbe64efa6c7f717e", []entities.Payload{})
+	startTest(errInvalidToken, testUserToken(token.Token, body))
 
-		if err != nil {
-			log.Fatal(err)
-		}
+	startDate, finishDate := getDates("2020-08-28 21:28:07", time.Now())
+	getNullPayloadData(payload)
 
-		token := &createTokenResponse{}
-		json.NewDecoder(tokenResp.Body).Decode(token)
-		tokenResp.Body.Close()
+	newDatabase, ctx, client := setupDatabase("mongodb://localhost:27017/", "things_db", logger)
+	defer disconnectClient(ctx, client)
+	newStore := setupStore(newDatabase, logger, 0)
 
-		fmt.Printf("User token: %s\n", token.Token)		
-		
-	} else {
-		// Make a user creation POST request
-		usr := &user{}
-		regex := regexp.MustCompile(`[a-z0-9]*\@[a-z]*\.[a-z]*`)
-		switch eval := regex.MatchString(os.Args[1]); eval {
-		case true:
-			usr.Email = os.Args[1]
-		default:
-			usr.Email = "test@test.com"
-		}
-
-		switch eval := strings.EqualFold(os.Args[2], ""); eval {
-		case false:
-			usr.Password = os.Args[2]
-		default:
-			usr.Password = "abcdef"
-		}
-
-		data := map[string]string{"email": usr.Email, "password": usr.Password}
-		buff, err := json.Marshal(data)
-
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		conn := &connection{}
-		switch eval := strings.EqualFold(os.Args[3], ""); eval {
-		case false:
-			conn.Server = os.Args[3]
-		default:
-			conn.Server = "localhost"
-		}
-
-		switch eval := strings.EqualFold(os.Args[4], ""); eval {
-		case false:
-			conn.Port = os.Args[4]
-		default:
-			conn.Port = "8180"
-		}
-
-		str := []string{"http://", conn.Server, ":", conn.Port, "/users"}
-
-		url := strings.Join(str, "")
-		resp, err := http.Post(url, "application/json", bytes.NewBuffer(buff))
-
-		if err != nil {
-			log.Fatal(err)
-		}
-		resp.Body.Close()
-
-		// Make a token creation POST request
-		tokenUrl := strings.Replace(url, "users", "tokens", -1)
-		tokenResp, err := http.Post(tokenUrl, "application/json", bytes.NewBuffer(buff))
-
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		token := &createTokenResponse{}
-		json.NewDecoder(tokenResp.Body).Decode(token)
-		tokenResp.Body.Close()
-
-		fmt.Printf("User token: %s\n", token.Token)
-
-	}	
-
+	query := getQuery(payload.ID, string(payload.Data[0].SensorID), 1, 0, 10, startDate, finishDate)
+	output, err := newStore.Get(query)
+	failOnError(err, "Failed to get data from MongoDB")
+	startTest(errQueryResult, testQueryOutput(output, payload))
+	showQueryResult(output)
 }
