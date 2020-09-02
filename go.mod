@@ -5,6 +5,9 @@ go 1.14
 require (
 	github.com/CESARBR/knot-babeltower v0.0.0-20200417005738-999c9383694d
 	github.com/cenkalti/backoff/v4 v4.0.2
+	github.com/fatih/gomodifytags v1.6.0 // indirect
+	github.com/google/go-cmp v0.2.0
+	github.com/google/go-querystring v1.0.0
 	github.com/gorilla/mux v1.7.4
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/pkg/errors v0.8.1
