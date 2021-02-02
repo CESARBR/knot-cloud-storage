@@ -1,4 +1,5 @@
 GOCMD=go
+GOSECCMD=gosec
 GOBUILD=$(GOCMD) build
 GOCLEAN=$(GOCMD) clean
 GOTEST=$(GOCMD) test ./...
@@ -20,6 +21,7 @@ tools:
 	go get github.com/ahmetb/govvv
 	go get github.com/mitchellh/gox
 	go get github.com/cespare/reflex
+	go get github.com/securego/gosec/v2/cmd/gosec
 	pip install pre-commit
 	pre-commit install
 
@@ -38,6 +40,10 @@ bin:
 .PHONY: test
 test:
 	$(GOTEST)
+
+.PHONY: sectest
+sectest:
+	$(GOSECCMD) -fmt=json ./...
 
 .PHONY: lint
 lint:
