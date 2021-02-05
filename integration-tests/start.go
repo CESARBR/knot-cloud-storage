@@ -17,7 +17,7 @@ func main() {
 	url := getURL(usr, "users")
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(buff))
 	failOnError(err, "Failed to do a HTTP POST")
-	resp.Body.Close()
+	defer resp.Body.Close()
 
 	// Make a token creation POST request
 	tokenURL := getURL(usr, "tokens")
@@ -25,8 +25,8 @@ func main() {
 	failOnError(err, "Failed to do a HTTP POST")
 
 	token := &userToken{}
-	json.NewDecoder(tokenResp.Body).Decode(token)
-	tokenResp.Body.Close()
+	defer json.NewDecoder(tokenResp.Body).Decode(token)
+	defer tokenResp.Body.Close()
 
 	config := getLogger("debug")
 	logrus := logging.NewLogrus(config.Level, false)
