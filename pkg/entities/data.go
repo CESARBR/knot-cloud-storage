@@ -11,6 +11,7 @@ type Data struct {
 }
 
 type Payload struct {
-	SensorID int         `bson:"sensorId" json:"sensorId"`
-	Value    interface{} `bson:"value" json:"value"`
+	SensorID  int         `bson:"sensorId" json:"sensorId"`
+	Value     interface{} `bson:"value" json:"value"`
+	Timestamp interface{} `bson:"timestamp" json:"timestamp"`
 }
