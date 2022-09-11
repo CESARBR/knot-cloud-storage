@@ -16,12 +16,14 @@ type Interactor interface {
 
 // DataInteractor represents the data layer interactor structure
 type DataInteractor struct {
-	things    things.Lister
-	DataStore data.Store
-	logger    logging.Logger
+	things     things.Lister
+	DataStore  data.Store
+	logger     logging.Logger
+	tokenCache map[string]struct{}
 }
 
 // NewDataInteractor creates a new data interactor instance
 func NewDataInteractor(things things.Lister, dataStore data.Store, logger logging.Logger) Interactor {
-	return &DataInteractor{things, dataStore, logger}
+	cache := make(map[string]struct{})
+	return &DataInteractor{things, dataStore, logger, cache}
 }
